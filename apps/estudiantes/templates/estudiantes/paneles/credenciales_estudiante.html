@@ -1,0 +1,24 @@
+{% extends 'publico/base.html' %}
+
+{% block title %}Credenciales del Estudiante{% endblock %}
+
+{% block content %}
+<section class="min-h-screen flex flex-col items-center justify-center bg-gray-100 text-center px-6">
+  <div class="bg-white p-8 rounded shadow-lg max-w-md w-full">
+    <h2 class="text-2xl font-bold text-green-800 mb-4">🎓 Estudiante registrado correctamente</h2>
+    <p class="text-gray-700 text-lg mb-2">Estas son las credenciales de acceso:</p>
+    <div class="text-left bg-gray-50 p-4 rounded border border-gray-200 mb-4">
+<p><strong>👤 Usuario:</strong> {{ credenciales.usuario }}</p>
+<p><strong>🔐 Contraseña:</strong> {{ credenciales.contrasena }}</p>
+
+    </div>
+    <a href="{% url 'panel_directivo' %}" class="inline-block bg-green-800 text-white px-6 py-2 rounded hover:bg-green-700">Volver al panel</a>
+  </div>
+</section>
+
+<script>
+  setTimeout(function () {
+    window.location.href = "{% url 'panel_directivo' %}";
+  }, 30000);
+</script>
+{% endblock %}

@@ -1,0 +1,23 @@
+# Entorno virtual
+venv/
+
+# Caché de Python
+__pycache__/
+*.pyc
+
+# Variables de entorno
+.env
+
+# Archivos de base de datos local SQLite
+db.sqlite3
+
+# Archivos multimedia subidos
+media/
+
+# Archivos de sistema de Mac y Windows
+.DS_Store
+Thumbs.db
+
+# Logs y archivos temporales
+*.log
+*.tmp

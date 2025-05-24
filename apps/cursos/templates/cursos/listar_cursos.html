@@ -1,0 +1,49 @@
+{% extends 'publico/base.html' %}
+
+{% block content %}
+<div class="p-6">
+  <h1 class="text-2xl font-bold mb-4">Cursos</h1>
+
+  <a href="{% url 'crear_curso' %}" class="bg-blue-600 text-white px-4 py-2 rounded">+ Nuevo Curso</a>
+
+  <table class="w-full mt-4 table-auto border">
+    <thead>
+      <tr class="bg-gray-100">
+        <th class="px-4 py-2 border">Nombre</th>
+        <th class="px-4 py-2 border">Docente</th>
+        <th class="px-4 py-2 border">Gestión</th>
+        <th class="px-4 py-2 border">Días</th>
+        <th class="px-4 py-2 border">Horario</th>
+        <th class="px-4 py-2 border">Acciones</th>
+        <th class="px-4 py-2 border">Inscritos</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for curso in cursos %}
+      <tr class="hover:bg-gray-50">
+        <td class="border px-4 py-2">{{ curso.nombre }}</td>
+        <td class="border px-4 py-2">{{ curso.docente }}</td>
+        <td class="border px-4 py-2">{{ curso.gestion }}</td>
+        <td class="border px-4 py-2">
+          {% for dia in curso.dias_list %}
+            <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-1 mb-1 px-2 py-0.5 rounded">
+              {{ dia }}
+            </span>
+          {% endfor %}
+        </td>
+        <td class="border px-4 py-2">
+          {{ curso.hora_inicio|time:"H:i" }} - {{ curso.hora_fin|time:"H:i" }}
+        </td>
+        <td class="border px-4 py-2">
+          <a href="{% url 'editar_curso' curso.pk %}" class="text-blue-500 hover:underline">Editar</a> |
+          <a href="{% url 'eliminar_curso' curso.pk %}" class="text-red-500 hover:underline">Eliminar</a>
+        </td>
+        <td class="border px-4 py-2 text-center">
+          <a href="{% url 'ver_estudiantes_por_curso' curso.id %}" class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded hover:bg-blue-200 transition">👁 Ver estudiantes</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

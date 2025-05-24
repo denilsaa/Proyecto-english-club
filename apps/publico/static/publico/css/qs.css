@@ -1,0 +1,103 @@
+ /* Animations and transitions */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    
+    .fade-in.appear {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Hover effects */
+    .value-item {
+      border-left: 3px solid transparent;
+      padding-left: 15px;
+      transition: all 0.3s ease;
+    }
+    
+    .value-item:hover {
+      border-left: 3px solid #FBBF24;
+      padding-left: 20px;
+      background-color: rgba(255, 255, 255, 0.7);
+    }
+    
+    /* Certificate zoom effect */
+    .certificate-container {
+      overflow: hidden;
+      border-radius: 0.5rem;
+      display: inline-block;
+    }
+    
+    .certificate-image {
+      transition: transform 0.5s ease;
+    }
+    
+    .certificate-container:hover .certificate-image {
+      transform: scale(1.05);
+    }
+    
+    /* Fancy underline effect for headers */
+    .fancy-underline {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .fancy-underline::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 3px;
+      bottom: -5px;
+      left: 0;
+      background-color: #FBBF24;
+      transition: width 0.3s ease;
+    }
+    
+    .fancy-underline:hover::after {
+      width: 100%;
+    }
+    
+    /* Parallax effect background for sections */
+    .parallax-bg {
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1; 
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #1E40AF; 
+      border-radius: 5px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: #FBBF24; 
+    }
+    
+    /* Pulse animation for important elements */
+    .pulse-effect {
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4);
+      }
+      70% {
+        box-shadow: 0 0 0 10px rgba(251, 191, 36, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(251, 191, 36, 0);
+      }
+    }

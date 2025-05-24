@@ -1,0 +1,43 @@
+{% extends 'publico/base.html' %}
+{% block title %}Personal Inactivo{% endblock %}
+
+{% block content %}
+<section class="p-6 bg-gray-50 min-h-screen">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-red-800 mb-6">🗃 Personal Administrativo Inactivo</h2>
+
+    <table class="w-full table-auto bg-white shadow rounded-lg overflow-hidden">
+      <thead class="bg-red-100 text-red-900">
+        <tr>
+          <th class="px-4 py-2 text-left">Nombre</th>
+          <th class="px-4 py-2 text-left">CI</th>
+          <th class="px-4 py-2 text-left">Rol</th>
+          <th class="px-4 py-2 text-left">Teléfono</th>
+          <th class="px-4 py-2 text-left">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in personal %}
+        <tr class="border-b hover:bg-red-50 transition">
+          <td class="px-4 py-2">{{ p.nombres }} {{ p.apellidos }}</td>
+          <td class="px-4 py-2">{{ p.ci }}</td>
+          <td class="px-4 py-2 capitalize">{{ p.rol }}</td>
+          <td class="px-4 py-2">{{ p.telefono }}</td>
+          <td class="px-4 py-2">
+            <a href="{% url 'reactivar_personal' p.id %}" class="text-green-600 hover:underline">Reactivar</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5" class="text-center py-4 text-gray-500">No hay personal inactivo.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="mt-6 text-center">
+      <a href="{% url 'listar_personal' %}" class="text-blue-600 hover:underline">← Volver al listado activo</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

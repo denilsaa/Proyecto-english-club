@@ -1,0 +1,21 @@
+{% extends 'publico/base.html' %}
+{% block title %}Editar Estudiante Regular{% endblock %}
+
+{% block content %}
+<section class="p-6 max-w-4xl mx-auto">
+  <h2 class="text-2xl font-bold text-blue-900 mb-6">
+  ✏️ Editar {{ estudiante.nombres }} {{ estudiante.apellidos }}
+</h2>
+
+<form method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-xl shadow space-y-4">
+  {% csrf_token %}
+  {{ form.as_p }}
+
+  <div class="flex justify-end gap-4 mt-6">
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Guardar cambios</button>
+    <a href="{% url 'listar_regulares' %}" class="text-gray-600 hover:underline">Cancelar</a>
+  </div>
+</form>
+
+</section>
+{% endblock %}

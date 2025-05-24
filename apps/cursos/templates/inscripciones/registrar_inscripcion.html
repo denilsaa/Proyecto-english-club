@@ -1,0 +1,70 @@
+{% extends 'publico/base.html' %}
+{% load static %}
+
+{% block title %}Registrar Inscripción{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md p-8 mt-10">
+  <h1 class="text-2xl font-bold text-blue-900 mb-6">{{ titulo }}</h1>
+
+  <form method="POST" enctype="multipart/form-data" class="space-y-6">
+    {% csrf_token %}
+
+    <!-- Curso -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Curso:</label>
+      {{ form.curso }}
+    </div>
+
+    <!-- Estudiante -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Estudiante:</label>
+      {{ form.estudiante }}
+    </div>
+
+    <!-- Fecha -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Fecha de inscripción:</label>
+      {{ form.fecha_inscripcion }}
+    </div>
+
+    <!-- Modalidad -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Modalidad:</label>
+      {{ form.modalidad }}
+    </div>
+
+    <!-- Medio de referencia (opcional) -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Medio de referencia:</label>
+      {{ form.medio_referencia }}
+    </div>
+
+    <!-- Motivo (opcional) -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Motivo:</label>
+      {{ form.motivo }}
+    </div>
+
+    <!-- Archivo adjunto -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Archivo adjunto:</label>
+      {{ form.archivo_formulario }}
+    </div>
+
+    <!-- Mostrar todos -->
+    <div>
+      <label class="inline-flex items-center">
+        {{ form.mostrar_todos }}
+        <span class="ml-2 text-sm text-gray-700">Permitir inscripción cruzada (otros tipos de estudiante)</span>
+      </label>
+    </div>
+
+    <!-- Botones -->
+    <div class="flex gap-4 pt-4">
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Guardar</button>
+      <a href="{% url 'listar_inscripciones' %}" class="text-sm text-gray-600 hover:underline">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

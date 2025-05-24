@@ -1,0 +1,15 @@
+{% extends 'publico/base.html' %}
+{% block title %}Eliminar Estudiante Técnico{% endblock %}
+
+{% block content %}
+<section class="p-6 max-w-xl mx-auto text-center">
+  <h2 class="text-xl text-red-700 font-bold mb-4">
+    ¿Estás seguro de desactivar a "{{ estudiante.nombres }} {{ estudiante.apellidos }}"?
+  </h2>
+  <form method="POST" class="space-x-4">
+    {% csrf_token %}
+    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded">Desactivar</button>
+    <a href="{% url 'listar_tecnicos' %}" class="text-gray-700 hover:underline">Cancelar</a>
+  </form>
+</section>
+{% endblock %}

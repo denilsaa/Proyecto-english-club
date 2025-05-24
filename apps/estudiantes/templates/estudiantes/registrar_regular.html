@@ -1,0 +1,103 @@
+{% extends 'publico/base.html' %}
+
+{% block title %}Registrar Estudiante Regular{% endblock %}
+
+{% block content %}
+<section class="py-10 px-4 bg-gray-50 min-h-screen flex justify-center">
+  <div class="bg-white shadow-md rounded-xl p-8 w-full max-w-2xl">
+    <h2 class="text-2xl font-bold text-blue-800 mb-6">👨‍👧 Registrar Estudiante Regular</h2>
+
+    <form method="post" enctype="multipart/form-data" class="space-y-5">
+      {% csrf_token %}
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label for="id_nombres">Nombres del estudiante:</label>
+          {{ form.nombres }}
+        </div>
+        <div>
+          <label for="id_apellidos">Apellidos del estudiante:</label>
+          {{ form.apellidos }}
+        </div>
+
+        <div>
+          <label for="id_fecha_nacimiento">Fecha nacimiento:</label>
+          {{ form.fecha_nacimiento }}
+        </div>
+        <div>
+          <label for="id_ci">CI:</label>
+          {{ form.ci }}
+        </div>
+
+        <div>
+          <label for="id_direccion">Dirección:</label>
+          {{ form.direccion }}
+        </div>
+        <div>
+          <label for="id_telefono">Teléfono:</label>
+          {{ form.telefono }}
+        </div>
+
+        <div>
+          <label for="id_grupo">Grupo asignado:</label>
+          {{ form.grupo }}
+        </div>
+        <div>
+          <label for="id_colegio_universidad">Colegio/Universidad:</label>
+          {{ form.colegio_universidad }}
+        </div>
+
+        <div class="sm:col-span-2">
+          <label for="id_archivo_documentacion">Archivo documentación:</label>
+          {{ form.archivo_documentacion }}
+        </div>
+      </div>
+
+      <hr class="my-6">
+
+      <h3 class="text-lg font-semibold text-blue-700">🧑‍🏫 Datos del Padre o Tutor</h3>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label for="id_padre_nombres">Nombres:</label>
+          {{ form.padre_nombres }}
+        </div>
+        <div>
+          <label for="id_padre_apellidos">Apellidos:</label>
+          {{ form.padre_apellidos }}
+        </div>
+
+        <div>
+          <label for="id_padre_ci">CI:</label>
+          {{ form.padre_ci }}
+        </div>
+        <div>
+          <label for="id_padre_direccion">Dirección:</label>
+          {{ form.padre_direccion }}
+        </div>
+
+        <div>
+          <label for="id_padre_telefono">Teléfono:</label>
+          {{ form.padre_telefono }}
+        </div>
+        <div>
+          <label for="id_padre_fecha_nacimiento">Fecha nacimiento:</label>
+          {{ form.padre_fecha_nacimiento }}
+        </div>
+      </div>
+
+      {% if form.non_field_errors %}
+        <div class="text-red-600 text-sm mt-2">
+          {{ form.non_field_errors }}
+        </div>
+      {% endif %}
+
+      <div class="mt-6 text-center">
+        <button type="submit" class="bg-blue-800 hover:bg-blue-700 text-white px-6 py-2 rounded-lg">
+          Registrar Estudiante
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}

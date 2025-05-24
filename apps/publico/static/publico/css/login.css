@@ -1,0 +1,307 @@
+/* Efecto ripple para botones */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.7);
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Estilos de enfoque para navegación por teclado */
+.keyboard-navigation *:focus {
+  outline: 3px solid #3b82f6 !important;
+  outline-offset: 2px !important;
+}
+
+/* Efecto de enfoque para inputs */
+.input-focus {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Animaciones de carga para la página */
+body:not(.loaded) .min-h-screen > div {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+body.loaded .min-h-screen > div {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Animaciones y efectos personalizados */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Estilos generales de la página */
+.min-h-screen {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234f46e5' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-attachment: fixed;
+}
+
+/* Estilos del contenedor principal */
+.min-h-screen > div {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.min-h-screen > div:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos del panel izquierdo */
+.bg-gradient-to-br {
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+.from-blue-800.to-indigo-900 {
+  position: relative;
+}
+
+.from-blue-800.to-indigo-900::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+  opacity: 0.1;
+}
+
+/* Elementos decorativos del panel izquierdo */
+.absolute.rounded-full {
+  animation: float 6s ease-in-out infinite;
+}
+
+.bg-blue-500.rounded-full {
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.bg-blue-500.rounded-full:hover {
+  transform: scale(1.1);
+  background-color: #60a5fa; /* Tailwind blue-400 */
+}
+
+/* Mejoras para los selectores de rol */
+.role-option {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.role-option::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(96, 165, 250, 0), rgba(96, 165, 250, 0.2));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.role-option:hover::before {
+  opacity: 1;
+}
+
+.role-option.ring-2 {
+  animation: pulse-glow 2s infinite;
+}
+
+.role-option:active {
+  transform: scale(0.97);
+}
+
+/* Mejoras para los campos de formulario */
+input[type="text"],
+input[type="password"] {
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* Efecto para el botón de mostrar/ocultar contraseña */
+#togglePassword {
+  transition: transform 0.2s ease;
+}
+
+#togglePassword:hover {
+  transform: scale(1.15);
+}
+
+#togglePassword:active {
+  transform: scale(0.9);
+}
+
+/* Mejoras para el botón de envío */
+button[type="submit"] {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+button[type="submit"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0.2) 50%, 
+    rgba(255, 255, 255, 0) 100%
+  );
+  transition: left 0.7s ease;
+}
+
+button[type="submit"]:hover::before {
+  left: 100%;
+}
+
+/* Mejoras para mensajes de error */
+.error-message,
+.bg-red-50 {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(239, 68, 68, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* Mejora de accesibilidad - focus outlines */
+button:focus,
+a:focus,
+input:focus,
+.role-option:focus-within {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* Ajustes responsivos adicionales */
+@media (max-width: 768px) {
+  .min-h-screen > div {
+    border-radius: 16px;
+    margin: 1rem;
+  }
+  
+  .p-12 {
+    padding: 1.5rem;
+  }
+  
+  #role-selector {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Efectos de carga */
+@keyframes loading {
+  0% {
+    transform: translateX(-100%);
+  }
+  50%, 100% {
+    transform: translateX(100%);
+  }
+}
+
+.loading::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.2), 
+    transparent
+  );
+  animation: loading 1.5s infinite;
+}
+
+/* Mejora visual para checkbox */
+input[type="checkbox"] {
+  position: relative;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background-color: #3b82f6;
+}
+
+/* Efectos para enlaces */
+a {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: #3b82f6;
+  transition: width 0.3s ease;
+}
+
+a:hover::after {
+  width: 100%;
+}

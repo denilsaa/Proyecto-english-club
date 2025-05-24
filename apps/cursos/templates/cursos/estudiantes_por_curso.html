@@ -1,0 +1,33 @@
+{% extends 'publico/base.html' %}
+{% block title %}Estudiantes en {{ curso.nombre }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto bg-white p-6 rounded shadow">
+  <h2 class="text-2xl font-bold text-blue-800 mb-6">
+    Estudiantes inscritos en: {{ curso.nombre }}
+  </h2>
+
+  <table class="w-full table-auto border-collapse">
+    <thead class="bg-blue-100">
+      <tr>
+        <th class="p-2 border">Nombre</th>
+        <th class="p-2 border">CI</th>
+        <th class="p-2 border">Tipo</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for ins in inscripciones %}
+      <tr>
+        <td class="p-2 border">{{ ins.estudiante.nombres }} {{ ins.estudiante.apellidos }}</td>
+        <td class="p-2 border">{{ ins.estudiante.ci }}</td>
+        <td class="p-2 border">{{ ins.estudiante.tipo|title }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="3" class="text-center text-gray-500 p-4">No hay estudiantes inscritos.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}English Club Institute{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  {% block extra_head %}{% endblock %}
+
+</head>
+<body class="bg-gray-100 font-sans">
+
+  {% if not request.session.rol == 'directivo' or request.path|slice:":10" != "/directivo" %}
+  <nav class="bg-blue-900 text-white px-6 py-4 flex justify-between items-center shadow">
+    <div class="text-xl font-bold">
+      <a href="{% url 'inicio' %}">English Club Institute</a>
+    </div>
+    <ul class="flex gap-6 items-center">
+      <li><a href="{% url 'inicio' %}" class="hover:text-yellow-400">Inicio</a></li>
+      <li><a href="{% url 'quienes_somos' %}" class="hover:text-yellow-400">Quiénes Somos</a></li>
+      <li><a href="{% url 'servicios' %}" class="hover:text-yellow-400">Servicios</a></li>
+      <li><a href="{% url 'contacto' %}" class="hover:text-yellow-400">Contacto</a></li>
+      <li>
+        <a href="{% url 'login' %}" class="bg-yellow-400 text-blue-900 font-semibold px-4 py-2 rounded hover:bg-yellow-300">
+          Iniciar Sesión
+        </a>
+      </li>
+    </ul>
+  </nav>
+  {% endif %}
+  
+
+  {% block content %}{% endblock %}
+
+
+</body>
+</html>

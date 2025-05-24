@@ -1,0 +1,91 @@
+{% extends 'publico/base.html' %}
+{% block title %}Inicio{% endblock %}
+{% load static %}
+
+{% block content %}
+  <script src="https://cdn.tailwindcss.com"></script>
+<section class="min-h-screen bg-gradient-to-b from-blue-900 to-blue-700 flex flex-col items-center justify-center text-center px-6 relative overflow-hidden">
+  <div class="z-10">
+    <h1 class="text-yellow-400 text-6xl md:text-7xl font-extrabold drop-shadow-lg mb-4">ENGLISH CLUB</h1>
+    <p class="text-white text-2xl italic mb-2">"Disfruta el inglés, vive el inglés"</p>
+    <p class="text-white text-lg max-w-xl mx-auto">Formamos profesionales bilingües con titulación en provisión nacional.</p>
+  </div>
+</section>
+
+<!-- ¿Quiénes Somos? -->
+<section class="bg-blue-800 text-white py-16 px-6" data-aos="fade-up">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+    <div>
+      <h2 class="text-4xl font-bold text-yellow-300 mb-4">¿Quiénes Somos?</h2>
+      <p class="text-lg text-justify mb-4 leading-relaxed">
+        El Instituto Técnico Superior English Club ofrece la titulación en provisión nacional para la carrera Técnico Superior en Idioma Inglés.
+        Nuestros programas forman profesionales bilingües con dominio avanzado del idioma, enfocados en el éxito académico y laboral tanto a nivel nacional como internacional.
+      </p>
+      <p class="text-sm text-yellow-200 italic">
+        Resolución Ministerial 0062/2020 · Centro Preparador Cambridge Bo-009 11-91-76
+      </p>
+    </div>
+    <div class="flex justify-center">
+        <img src="{% static 'publico/img/titulo.jpeg' %}" alt="Título">
+    </div>
+  </div>
+</section>
+
+<!-- Misión -->
+<section class="bg-blue-700 text-white py-16 px-6" data-aos="fade-up">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+    <div class="flex justify-center">
+      <img src="{% static 'publico/img/mision.jpeg' %}" alt="Misión">
+    </div>
+    <div>
+      <h2 class="text-4xl font-bold text-yellow-300 mb-4">Misión</h2>
+      <p class="text-lg text-justify leading-relaxed">
+        Formar profesionales bilingües con excelencia académica, responsabilidad ética y compromiso social.
+        Promovemos ciudadanos capaces de desenvolverse en contextos multiculturales, educativos y laborales,
+        aportando activamente al desarrollo del país.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Visión -->
+<section class="bg-blue-800 text-white py-16 px-6" data-aos="fade-up">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+    <div>
+      <h2 class="text-4xl font-bold text-yellow-300 mb-4">Visión</h2>
+      <p class="text-lg text-justify leading-relaxed">
+        Ser el referente nacional e internacional en enseñanza del idioma inglés, destacando por nuestra excelencia académica,
+        innovación pedagógica y calidad institucional. Aspiramos a transformar vidas mediante una educación de clase mundial.
+      </p>
+    </div>
+    <div class="flex justify-center">
+      <img src="{% static 'publico/img/vision.jpeg' %}" alt="Visión">
+    </div>
+  </div>
+</section>
+
+<!-- Valores -->
+<section class="bg-blue-700 text-white py-16 px-6" data-aos="fade-up">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-center text-yellow-400 mb-10">Nuestros Valores</h2>
+    <div class="grid md:grid-cols-2 gap-8 text-lg">
+      <ul class="list-disc pl-6 space-y-2 text-justify">
+        <li><strong>Excelencia Académica:</strong> Educación de calidad centrada en el estudiante.</li>
+        <li><strong>Integridad y Ética:</strong> Formamos ciudadanos honestos y transparentes.</li>
+        <li><strong>Responsabilidad:</strong> Impulsamos el compromiso personal y social.</li>
+        <li><strong>Respeto a la Diversidad:</strong> Fomentamos la inclusión y la equidad.</li>
+      </ul>
+      <ul class="list-disc pl-6 space-y-2 text-justify">
+        <li><strong>Bienestar Social:</strong> Trabajamos por comunidades solidarias.</li>
+        <li><strong>Innovación:</strong> Buscamos siempre nuevas formas de enseñar.</li>
+        <li><strong>Crecimiento Espiritual:</strong> Formamos personas con sentido trascendente.</li>
+        <li><strong>Fortaleza Familiar:</strong> Apoyamos el desarrollo del entorno familiar.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-blue-900 text-white text-center py-6 text-sm">© 2025 English Club Institute. Todos los derechos reservados.</footer>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init();</script>
+{% endblock %}

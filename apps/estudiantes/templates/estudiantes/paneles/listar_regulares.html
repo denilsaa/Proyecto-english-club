@@ -1,0 +1,46 @@
+{% extends 'publico/base.html' %}
+{% block title %}Estudiantes Regulares{% endblock %}
+
+{% block content %}
+<section class="p-6 bg-gray-50 min-h-screen">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-3xl font-bold text-blue-900 mb-6">👨‍👩‍👧 Estudiantes Regulares</h2>
+
+    <table class="w-full table-auto bg-white shadow rounded-lg overflow-hidden">
+      <thead class="bg-blue-100 text-blue-900">
+        <tr>
+          <th class="px-4 py-2 text-left">Estudiante</th>
+          <th class="px-4 py-2 text-left">CI</th>
+          <th class="px-4 py-2 text-left">Teléfono</th>
+          <th class="px-4 py-2 text-left">Grupo</th>
+          <th class="px-4 py-2 text-left">Padre/Tutor</th>
+          <th class="px-4 py-2 text-left">CI Padre</th>
+          <th class="px-4 py-2 text-left">Tel. Padre</th>
+          <th class="px-4 py-2 text-left">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for e in estudiantes %}
+        <tr class="border-b hover:bg-blue-50 transition">
+          <td class="px-4 py-2">{{ e.nombres }} {{ e.apellidos }}</td>
+          <td class="px-4 py-2">{{ e.ci }}</td>
+          <td class="px-4 py-2">{{ e.telefono }}</td>
+          <td class="px-4 py-2">{{ e.grupo }}</td>
+          <td class="px-4 py-2">{{ e.padre.nombres }} {{ e.padre.apellidos }}</td>
+          <td class="px-4 py-2">{{ e.padre.ci }}</td>
+          <td class="px-4 py-2">{{ e.padre.telefono }}</td>
+          <td class="px-4 py-2">
+            <a href="{% url 'editar_estudiante_regular' e.id %}" class="text-blue-600 hover:underline mr-2">Editar</a>
+            <a href="{% url 'eliminar_estudiante_regular' e.id %}" class="text-red-600 hover:underline">Eliminar</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="8" class="text-center py-4 text-gray-500">No hay estudiantes regulares registrados.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

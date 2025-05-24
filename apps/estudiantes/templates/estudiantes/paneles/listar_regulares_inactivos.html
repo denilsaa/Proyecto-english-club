@@ -1,0 +1,45 @@
+{% extends 'publico/base.html' %}
+{% block title %}Estudiantes Regulares Inactivos{% endblock %}
+
+{% block content %}
+<section class="p-6 bg-gray-50 min-h-screen">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-3xl font-bold text-red-800 mb-6">🗃 Estudiantes Regulares Inactivos</h2>
+
+    <table class="w-full table-auto bg-white shadow rounded-lg overflow-hidden">
+      <thead class="bg-red-100 text-red-900">
+        <tr>
+          <th class="px-4 py-2 text-left">Estudiante</th>
+          <th class="px-4 py-2 text-left">CI</th>
+          <th class="px-4 py-2 text-left">Grupo</th>
+          <th class="px-4 py-2 text-left">Padre</th>
+          <th class="px-4 py-2 text-left">Teléfono Padre</th>
+          <th class="px-4 py-2 text-left">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for e in estudiantes %}
+        <tr class="border-b hover:bg-red-50 transition">
+          <td class="px-4 py-2">{{ e.nombres }} {{ e.apellidos }}</td>
+          <td class="px-4 py-2">{{ e.ci }}</td>
+          <td class="px-4 py-2">{{ e.grupo }}</td>
+          <td class="px-4 py-2">{{ e.padre.nombres }} {{ e.padre.apellidos }}</td>
+          <td class="px-4 py-2">{{ e.padre.telefono }}</td>
+          <td class="px-4 py-2">
+            <a href="{% url 'reactivar_estudiante_regular' e.id %}" class="text-green-600 hover:underline">Reactivar</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6" class="text-center py-4 text-gray-500">No hay estudiantes regulares inactivos.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="mt-6 text-center">
+      <a href="{% url 'listar_regulares' %}" class="text-blue-600 hover:underline">← Volver al listado activo</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
