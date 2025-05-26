@@ -1,0 +1,41 @@
+{% extends 'publico/base.html' %}
+{% block title %}Asistencia - {{ curso.nombre }}{% endblock %}
+
+{% block content %}
+<div class="p-6 max-w-5xl mx-auto">
+  <h2 class="text-2xl font-bold mb-4">Asistencia - {{ curso.nombre }}</h2>
+
+  <form method="get" class="mb-4">
+    <label for="fecha">Seleccionar fecha:</label>
+    <input type="date" name="fecha" value="{{ fecha }}" class="border p-2 rounded">
+    <button type="submit" class="bg-blue-600 text-white px-3 py-1 rounded">Ver</button>
+  </form>
+
+  {% if mensaje_error %}
+  <div class="text-red-600 font-semibold mb-4">{{ mensaje_error }}</div>
+  {% endif %}
+
+  <table class="w-full table-auto border">
+    <thead class="bg-gray-100">
+      <tr>
+        <th>Estudiante</th>
+        <th>Estado</th>
+        <th>Permiso</th>
+        <th>Justificación</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for asistencia in asistencias %}
+      <tr>
+        <td>{{ asistencia.estudiante.nombres }} {{ asistencia.estudiante.apellidos }}</td>
+        <td>{{ asistencia.estado|title }}</td>
+        <td>{% if asistencia.permiso_solicitado %}✅{% else %}❌{% endif %}</td>
+        <td>{{ asistencia.justificacion }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="4" class="text-center">No hay registros para esta fecha.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

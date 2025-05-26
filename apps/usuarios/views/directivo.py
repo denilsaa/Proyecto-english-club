@@ -10,12 +10,20 @@ from apps.usuarios.models.personal import PersonalAdministrativo
 from django.shortcuts import render, get_object_or_404, redirect
 from apps.usuarios.forms.personal import PersonalAdministrativoForm
 from apps.usuarios.models.personal import PersonalAdministrativo
-
+from apps.cursos.models.curso import Curso
+from apps.usuarios.models.usuario import Usuario
 @verificar_sesion_rol('directivo')
 def panel_directivo(request):
     usuario_id = request.session.get('usuario_id')
     usuario = Usuario.objects.get(id=usuario_id)
-    return render(request, 'paneles/directivo.html', {'nombre': usuario.nombre_usuario})
+
+    # Filtrar cursos donde el docente sea el usuario actual
+    cursos = Curso.objects.filter(docente__usuario=usuario)
+
+    return render(request, 'paneles/directivo.html', {
+        'nombre': usuario.nombre_usuario,
+        'cursos': cursos,
+    })
 
 
 @verificar_sesion_rol('directivo')
