@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'apps.publicaciones',
     'apps.vark',
     'apps.publico',    
+    'widget_tweaks', #Instalacion necesaria
 ]
 
 
@@ -152,7 +153,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [ BASE_DIR / 'apps' / 'publico' / 'static' ]
+STATICFILES_DIRS = [
+    BASE_DIR / 'apps' / 'publico' / 'static',
+    BASE_DIR / 'apps' / 'estudiantes' / 'static',
+]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'

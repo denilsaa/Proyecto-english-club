@@ -1,0 +1,44 @@
+/* Animación para el perrito moviéndose de izquierda a derecha */
+@keyframes slide-right {
+  0% {
+    left: -4rem; /* Empieza fuera del navbar por la izquierda */
+  }
+  100% {
+    left: 100%; /* Termina fuera del navbar por la derecha */
+  }
+}
+.animate-slide-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 4rem; /* Tamaño del perrito */
+  animation: slide-right 10s linear infinite;
+  pointer-events: none;
+  z-index: 5; /* Para que quede delante del fondo pero detrás del menú */
+  opacity: 1; /* Sin transparencia */
+  filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5)); /* Sombra para destacar */
+}
+@keyframes slide-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-slide-left {
+  animation: slide-left 10s linear infinite;
+  display: flex;
+}
+
+/* Solo el estilo para el div de partículas (ya controlado con Tailwind, pero por si quieres más control) */
+#particles-js {
+  /* Aseguramos que cubra todo el viewport */
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -10; /* Que esté detrás del contenido */
+}
