@@ -1,31 +1,98 @@
 {% extends 'publico/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
 
 {% block title %}Registrar Estudiante Técnico{% endblock %}
 
 {% block content %}
-<section class="px-6 md:px-12 py-12 bg-gray-50 min-h-screen">
-  <h2 class="text-3xl font-bold text-blue-900 mb-6">🎓 Registrar Estudiante Técnico</h2>
+<section class="min-h-screen py-12 px-4 sm:px-6 md:px-12 bg-gradient-to-b from-blue-50 via-gray-100 to-white flex justify-center items-start">
+  <div class="fixed top-0 left-0 w-full h-full opacity-10 bg-[url('/static/img/pattern.svg')] bg-center bg-cover z-0"></div>
 
-  <form method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-md max-w-2xl">
-    {% csrf_token %}
+  <form class="relative bg-white border-l-4 border-blue-500 rounded-lg shadow-lg max-w-2xl w-full p-6 animate__animated animate__fadeInUp" method="POST" enctype="multipart/form-data" id="form-registro">
 
-    {% if form.non_field_errors %}
-      <div class="mb-4 text-red-600 font-semibold">
-        {{ form.non_field_errors }}
-      </div>
-    {% endif %}
+    <!-- Header -->
+    <div class="relative bg-[#1a3b68] p-6 rounded-t-lg overflow-hidden">
+      <div class="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('/static/img/wave.svg')] bg-cover"></div>
+      <h2 class="relative text-white text-center text-2xl font-bold z-10">
+        <span class="animate__animated animate__pulse animate__infinite animate__slower">
+          <i class="bi bi-clipboard-check text-yellow-400 mr-2"></i>
+          FORMULARIO DE INSCRIPCIÓN
+        </span>
+      </h2>
+    </div>
 
-    {{ form.as_p }}
+    <div class="p-6">
+      {% csrf_token %}
 
-    <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-      Registrar Estudiante
-    </button>
+      {% if form.non_field_errors %}
+        <div class="mb-4 text-red-600 font-semibold">
+          {{ form.non_field_errors }}
+        </div>
+      {% endif %}
+
+      {% for field in form %}
+        <div class="mb-4">
+          {% if field.name == "telefono" %}
+            <label for="telefono" class="block text-gray-700 font-medium mb-1">
+              {{ field.label }} {% if field.field.required %}<span class="text-red-500">*</span>{% endif %}
+            </label>
+            <div class="block w-full px-4 py-2 border border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-blue-500">
+              <input type="tel" id="telefono" name="telefono"
+                     class="w-full outline-none"
+                     value="{{ form.telefono.value|default_if_none:'' }}">
+            </div>
+            <p id="telefono-error" class="text-sm text-red-600 mt-1 hidden">Número inválido</p>
+
+          {% elif field.name == "colegio_universidad" %}
+            <label for="id_colegio_universidad" class="block text-gray-700 font-medium mb-1">
+              {{ field.label }} {% if field.field.required %}<span class="text-red-500">*</span>{% endif %}
+            </label>
+            <div style="position: relative; width: 100%;">
+              <input type="text" id="id_colegio_universidad" name="{{ field.name }}" autocomplete="off"
+                     value="{{ field.value|default_if_none:'' }}" class="input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" />
+              <div id="lista-instituciones" class="lista-sugerencias"></div>
+            </div>
+
+          {% else %}
+            <label for="{{ field.id_for_label }}" class="block text-gray-700 font-medium mb-1">
+              {{ field.label }} {% if field.field.required %}<span class="text-red-500">*</span>{% endif %}
+            </label>
+            {{ field|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
+
+            {% if field.name == "archivo_documentacion" %}
+              <div id="preview-container" class="mt-2"></div>
+            {% endif %}
+          {% endif %}
+
+          {% if field.errors %}
+            <p class="text-sm text-red-600 mt-1">{{ field.errors|striptags }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      <button type="submit"
+        class="mt-4 w-full sm:w-auto bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-colors duration-200">
+        Registrar Estudiante
+      </button>
+    </div>
   </form>
-
-  <div class="mt-8">
-    <a href="{% url 'panel_directivo' %}" class="text-blue-600 hover:underline">
-      ← Volver al panel
-    </a>
-  </div>
 </section>
+
+<!-- SCRIPTS FUNCIONALES -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.min.js"></script>
+<script src="{% static 'tecnico/js/tecnico.js' %}"></script>
+
+<!-- MODAL DE EDAD -->
+<div id="edad-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+  <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full border border-gray-300">
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">¿Estás seguro?</h2>
+    <p id="edad-modal-text" class="text-gray-700 mb-6"></p>
+    <div class="flex justify-end gap-4">
+      <button id="edad-cancelar" class="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 text-gray-800">No</button>
+      <button id="edad-confirmar" class="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white">Sí</button>
+    </div>
+  </div>
+</div>
 {% endblock %}
