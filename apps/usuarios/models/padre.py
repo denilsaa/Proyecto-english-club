@@ -9,6 +9,7 @@ class Padre(models.Model):
     direccion = models.CharField(max_length=200)
     telefono = models.CharField(max_length=20)
     fecha_nacimiento = models.DateField()
+    estudiantes = models.ManyToManyField('estudiantes.Estudiante', related_name='padres')
 
     def __str__(self):
         return f"{self.nombres} {self.apellidos} (Padre)"

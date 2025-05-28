@@ -18,6 +18,7 @@ class Asistencia(models.Model):
     archivo_justificacion = models.FileField(upload_to='documentacion/asistencias/', blank=True, null=True)
     justificado_por = models.ForeignKey(Usuario, on_delete=models.SET_NULL, null=True, blank=True)
     fecha_revision = models.DateTimeField(null=True, blank=True)
+    justificacion = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.fecha} - {self.estudiante} - {self.estado}"

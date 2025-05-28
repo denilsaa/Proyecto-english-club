@@ -1,0 +1,47 @@
+{% extends 'publico/base.html' %}
+{% block title %}Registrar Asistencia - {{ curso.nombre }}{% endblock %}
+
+{% block content %}
+<div class="p-6 max-w-5xl mx-auto">
+  <h2 class="text-2xl font-bold mb-4">Registrar Asistencia - {{ curso.nombre }}</h2>
+
+  {% if mensaje_error %}
+  <div class="mb-4 text-red-600 font-semibold">{{ mensaje_error }}</div>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    <label for="fecha" class="block mb-2">Fecha:</label>
+    <input type="date" name="fecha" value="{{ fecha_hoy }}" class="mb-4 p-2 border rounded" required>
+
+    <table class="w-full table-auto border">
+      <thead>
+        <tr class="bg-gray-100">
+          <th>Estudiante</th>
+          <th>Estado</th>
+          <th>Permiso</th>
+          <th>Justificación</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for est in estudiantes %}
+        <tr>
+          <td>{{ est.nombres }} {{ est.apellidos }}</td>
+          <td>
+            <select name="estado_{{ est.id }}" class="border rounded p-1">
+              <option value="presente">Presente</option>
+              <option value="ausente">Ausente</option>
+              <option value="justificado">Justificado</option>
+            </select>
+          </td>
+          <td><input type="checkbox" name="permiso_{{ est.id }}" value="true"></td>
+          <td><input type="text" name="justificacion_{{ est.id }}" class="w-full border rounded p-1"></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded">Guardar Asistencia</button>
+  </form>
+</div>
+{% endblock %}

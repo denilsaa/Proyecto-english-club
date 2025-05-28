@@ -105,6 +105,26 @@
       <a href="{% url 'listar_inscripciones' %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Ver lista →</a>
     </div>
   </div>
+<h3 class="text-xl font-bold text-blue-800 mb-4 mt-8">📅 Gestión de Asistencia</h3>
+<div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+  {% for curso in cursos %}
+  <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
+    <h4 class="text-lg font-bold text-blue-800 mb-2">📝 Registrar Asistencia</h4>
+    <p class="text-sm text-gray-600">Registrar la asistencia diaria de los estudiantes en el curso {{ curso.nombre }}.</p>
+    <a href="{% url 'registrar_asistencia_curso' curso.id %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Registrar →</a>
+  </div>
+  <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
+    <h4 class="text-lg font-bold text-blue-800 mb-2">📋 Ver Asistencias</h4>
+    <p class="text-sm text-gray-600">Consultar asistencias registradas por fecha y curso {{ curso.nombre }}.</p>
+    <a href="{% url 'listar_asistencias_curso' curso.id %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Ver lista →</a>
+  </div>
+  {% empty %}
+  <div class="col-span-full">
+    <p class="text-red-600 font-medium">No hay cursos disponibles para gestionar asistencia.</p>
+  </div>
+  {% endfor %}
+</div>
+
 
   <!-- 🔓 Cerrar sesión -->
   <div class="mt-12 text-center">
