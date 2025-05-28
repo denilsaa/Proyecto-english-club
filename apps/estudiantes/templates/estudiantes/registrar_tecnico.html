@@ -1,9 +1,8 @@
 {% extends 'publico/base.html' %}
 {% load static %}
 {% load widget_tweaks %}
-
 {% block title %}Registrar Estudiante Técnico{% endblock %}
-
+<link rel="stylesheet" href="{% static 'tecnico/css/tecnico.css' %}">
 {% block content %}
 <section class="min-h-screen py-12 px-4 sm:px-6 md:px-12 bg-gradient-to-b from-blue-50 via-gray-100 to-white flex justify-center items-start">
   <div class="fixed top-0 left-0 w-full h-full opacity-10 bg-[url('/static/img/pattern.svg')] bg-center bg-cover z-0"></div>
@@ -33,27 +32,30 @@
       {% for field in form %}
         <div class="mb-4">
           {% if field.name == "telefono" %}
+            <!-- CAMPO TELÉFONO -->
             <label for="telefono" class="block text-gray-700 font-medium mb-1">
               {{ field.label }} {% if field.field.required %}<span class="text-red-500">*</span>{% endif %}
             </label>
             <div class="block w-full px-4 py-2 border border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-blue-500">
               <input type="tel" id="telefono" name="telefono"
-                     class="w-full outline-none"
-                     value="{{ form.telefono.value|default_if_none:'' }}">
+                    class="w-full outline-none"
+                    value="{{ form.telefono.value|default_if_none:'' }}">
             </div>
             <p id="telefono-error" class="text-sm text-red-600 mt-1 hidden">Número inválido</p>
 
           {% elif field.name == "colegio_universidad" %}
+            <!-- CAMPO COLEGIO/UNIVERSIDAD -->
             <label for="id_colegio_universidad" class="block text-gray-700 font-medium mb-1">
               {{ field.label }} {% if field.field.required %}<span class="text-red-500">*</span>{% endif %}
             </label>
             <div style="position: relative; width: 100%;">
               <input type="text" id="id_colegio_universidad" name="{{ field.name }}" autocomplete="off"
-                     value="{{ field.value|default_if_none:'' }}" class="input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" />
+                    value="{{ field.value|default_if_none:'' }}" class="input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" />
               <div id="lista-instituciones" class="lista-sugerencias"></div>
             </div>
 
           {% else %}
+            <!-- OTROS CAMPOS -->
             <label for="{{ field.id_for_label }}" class="block text-gray-700 font-medium mb-1">
               {{ field.label }} {% if field.field.required %}<span class="text-red-500">*</span>{% endif %}
             </label>
@@ -83,16 +85,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.min.js"></script>
 <script src="{% static 'tecnico/js/tecnico.js' %}"></script>
-
-<!-- MODAL DE EDAD -->
-<div id="edad-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
-  <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full border border-gray-300">
-    <h2 class="text-xl font-semibold text-gray-800 mb-4">¿Estás seguro?</h2>
-    <p id="edad-modal-text" class="text-gray-700 mb-6"></p>
-    <div class="flex justify-end gap-4">
-      <button id="edad-cancelar" class="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 text-gray-800">No</button>
-      <button id="edad-confirmar" class="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white">Sí</button>
+<!-- Modal de confirmación -->
+<div id="modalConfirmacion" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+  <div class="bg-white rounded-lg shadow-xl p-6 max-w-sm w-full animate-fade-in-down">
+    <p id="modalMensaje" class="text-gray-800 mb-4 text-sm"></p>
+    <div class="flex justify-end space-x-3">
+      <button id="btnCancelar" class="px-4 py-1 bg-gray-300 rounded hover:bg-gray-400">No</button>
+      <button id="btnAceptar" class="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">Sí</button>
     </div>
   </div>
 </div>
+
 {% endblock %}

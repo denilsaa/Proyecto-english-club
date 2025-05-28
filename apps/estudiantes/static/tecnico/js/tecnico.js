@@ -139,10 +139,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('DOMContentLoaded', function () {
   const fechaInput = document.querySelector('input[name="fecha_nacimiento"]');
-
   const fechaError = document.createElement('div');
   fechaError.className = 'text-red-500 text-sm mt-1 transition-opacity duration-300 opacity-0';
   fechaInput.parentNode.appendChild(fechaError);
+
+  const modal = document.getElementById('modalConfirmacion');
+  const modalMensaje = document.getElementById('modalMensaje');
+  const btnAceptar = document.getElementById('btnAceptar');
+  const btnCancelar = document.getElementById('btnCancelar');
+
+  let fechaPendiente = '';
 
   fechaInput.addEventListener('input', function () {
     const valor = fechaInput.value;
@@ -172,12 +178,24 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (edad >= 14 && edad <= 17) {
-      if (!confirm(`La fecha ingresada corresponde a un menor de edad (${edad} años). ¿Desea continuar con esta fecha: ${valor}?`)) {
-        fechaInput.value = '';
-        return 'Ingrese otra fecha.';
-      }
+      fechaPendiente = valor;
+      modalMensaje.textContent = `La fecha ingresada corresponde a un menor de edad (${edad} años). ¿Desea continuar con esta fecha: ${valor}?`;
+      modal.classList.remove('hidden');
     }
 
     return '';
   }
+
+  btnAceptar.addEventListener('click', function () {
+    modal.classList.add('hidden');
+    fechaError.textContent = '';
+    fechaError.style.opacity = '0';
+  });
+
+  btnCancelar.addEventListener('click', function () {
+    modal.classList.add('hidden');
+    fechaInput.value = '';
+    fechaError.textContent = 'Ingrese otra fecha.';
+    fechaError.style.opacity = '1';
+  });
 });

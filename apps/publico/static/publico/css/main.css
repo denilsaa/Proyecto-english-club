@@ -1,3 +1,7 @@
+.bg-custom {
+  background-color: #162C6A;
+}
+
 /* Animación para el perrito moviéndose de izquierda a derecha */
 @keyframes slide-right {
   0% {

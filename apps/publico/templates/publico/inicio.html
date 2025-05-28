@@ -1,18 +1,24 @@
 {% extends 'publico/base.html' %}
 {% block title %}Inicio{% endblock %}
 {% load static %}
-
 {% block content %}
-<section class="min-h-screen bg-gradient-to-b from-blue-900 to-blue-700 flex flex-col items-center justify-center text-center px-6 relative overflow-hidden">
-  <div class="z-10">
-    <h1 class="text-yellow-400 text-6xl md:text-7xl font-extrabold drop-shadow-lg mb-4">ENGLISH CLUB</h1>
-    <p class="text-white text-2xl italic mb-2">"Disfruta el inglés, vive el inglés"</p>
-    <p class="text-white text-lg max-w-xl mx-auto">Formamos profesionales bilingües con titulación en provisión nacional.</p>
+  {% block extra_head %}
+  <link rel="stylesheet" href="{% static 'publico/css/inicio.css' %}">
+  {% endblock %}
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<section class="hero" data-aos="custom-wipe">  
+  <div id="stage">
+    <img id="bg-image" src="{% static 'publico/img/perrito.png' %}" alt="Imagen de fondo" />
   </div>
+  <h1 id="animated-text" style="display: none;">ENGLISH CLUB</h1>
+  <canvas id="text" width="500" height="150"></canvas>
+  <p class="sub">"Disfruta el inglés, vive el inglés"</p>
 </section>
 
 <!-- ¿Quiénes Somos? -->
-<section class="bg-blue-800 text-white py-16 px-6" data-aos="fade-up">
+<section class="relative bg-blue-800/80 text-white pt-2 pb-6 px-6 -mt-96 backdrop-blur-sm z-10" data-aos="custom-wipe">
   <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
     <div>
       <h2 class="text-4xl font-bold text-yellow-300 mb-4">¿Quiénes Somos?</h2>
@@ -25,7 +31,7 @@
       </p>
     </div>
     <div class="flex justify-center">
-        <img src="{% static 'publico/img/titulo.jpeg' %}" alt="Título">
+      <img src="{% static 'publico/img/titulo.jpeg' %}" alt="Título">
     </div>
   </div>
 </section>
@@ -85,6 +91,16 @@
 </section>
 
 <footer class="bg-blue-900 text-white text-center py-6 text-sm">© 2025 English Club Institute. Todos los derechos reservados.</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r79/three.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>AOS.init();</script>
+<script>
+  AOS.init();
+  AOS.refresh(); // por si cargas contenido dinámico
+
+  // Personalizamos AOS para ejecutar nuestra animación
+  document.addEventListener('aos:in:custom-wipe', ({ detail }) => {
+    detail.classList.add('wipe-up');
+  });
+</script>
+<script src="{% static 'publico/js/inicio.js' %}"></script>
 {% endblock %}
