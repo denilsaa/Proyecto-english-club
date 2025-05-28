@@ -27,7 +27,8 @@ class EstudianteTecnicoForm(forms.ModelForm):
                 'class': 'block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
             }),
             'direccion': forms.TextInput(attrs={
-                'class': 'block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                'class': 'block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500',
+                'id': 'direccion-input',  # Le pongo un id para JS
             }),
             'telefono': forms.TextInput(attrs={
                 'class': 'block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
@@ -46,3 +47,4 @@ class EstudianteTecnicoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['archivo_documentacion'].required = True
+        self.fields['nombres'].required = True
