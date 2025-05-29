@@ -5,9 +5,7 @@
   {% block extra_head %}
   <link rel="stylesheet" href="{% static 'publico/css/inicio.css' %}">
   {% endblock %}
-  <!-- AOS CSS -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
 <section class="hero" data-aos="custom-wipe">  
   <div id="stage">
     <img id="bg-image" src="{% static 'publico/img/perrito.png' %}" alt="Imagen de fondo" />
@@ -16,64 +14,79 @@
   <canvas id="text" width="500" height="150"></canvas>
   <p class="sub">"Disfruta el inglés, vive el inglés"</p>
 </section>
-
-<!-- ¿Quiénes Somos? -->
-<section class="relative bg-blue-800/80 text-white pt-2 pb-6 px-6 -mt-96 backdrop-blur-sm z-10" data-aos="custom-wipe">
-  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+<section class="relative py-16 px-6 z-10" style="margin-top: -30rem;" data-aos="fade-up">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center p-10 rounded-3xl shadow-2xl backdrop-blur-md transition-all duration-700 ease-in-out hover:scale-[1.01]" style="background-color: #162C6A;">
+    
+    <!-- Texto -->
     <div>
-      <h2 class="text-4xl font-bold text-yellow-300 mb-4">¿Quiénes Somos?</h2>
-      <p class="text-lg text-justify mb-4 leading-relaxed">
+      <h2 class="text-4xl md:text-5xl font-bold text-yellow-300 mb-6 tracking-tight animate-fade-in-up">
+        ¿Quiénes Somos?
+      </h2>
+      <p class="text-lg text-justify text-white/90 leading-relaxed mb-6 animate-fade-in-up delay-200">
         El Instituto Técnico Superior English Club ofrece la titulación en provisión nacional para la carrera Técnico Superior en Idioma Inglés.
         Nuestros programas forman profesionales bilingües con dominio avanzado del idioma, enfocados en el éxito académico y laboral tanto a nivel nacional como internacional.
       </p>
-      <p class="text-sm text-yellow-200 italic">
+      <p class="text-sm text-yellow-200 italic animate-fade-in-up delay-400">
         Resolución Ministerial 0062/2020 · Centro Preparador Cambridge Bo-009 11-91-76
       </p>
     </div>
-    <div class="flex justify-center">
-      <img src="{% static 'publico/img/titulo.jpeg' %}" alt="Título">
+
+    <!-- Imagen -->
+    <div class="flex justify-center animate-fade-in-up delay-500">
+      <img src="{% static 'publico/img/titulo.jpeg' %}" alt="Título" class="rounded-2xl shadow-xl max-w-full w-[90%] md:w-[80%]">
     </div>
   </div>
 </section>
 
 <!-- Misión -->
-<section class="bg-blue-700 text-white py-16 px-6" data-aos="fade-up">
-  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
-    <div class="flex justify-center">
-      <img src="{% static 'publico/img/mision.jpeg' %}" alt="Misión">
+<section class="relative py-16 px-6 z-10" style="margin-top: -0.5rem;" data-aos="fade-up">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center p-10 rounded-3xl shadow-2xl backdrop-blur-md transition-all duration-700 ease-in-out hover:scale-[1.01]" style="background-color: #162C6A;">
+    
+    <!-- Imagen -->
+    <div class="flex justify-center animate-fade-in-up delay-500">
+      <img src="{% static 'publico/img/mision.jpeg' %}" alt="Misión" class="rounded-2xl shadow-xl max-w-full w-[90%] md:w-[80%]">
     </div>
+
+    <!-- Texto -->
     <div>
-      <h2 class="text-4xl font-bold text-yellow-300 mb-4">Misión</h2>
-      <p class="text-lg text-justify leading-relaxed">
+      <h2 class="text-4xl md:text-5xl font-bold text-yellow-300 mb-6 tracking-tight animate-fade-in-up">
+        Misión
+      </h2>
+      <p class="text-lg text-justify text-white/90 leading-relaxed mb-6 animate-fade-in-up delay-200">
         Formar profesionales bilingües con excelencia académica, responsabilidad ética y compromiso social.
         Promovemos ciudadanos capaces de desenvolverse en contextos multiculturales, educativos y laborales,
         aportando activamente al desarrollo del país.
       </p>
     </div>
+    
   </div>
 </section>
 
 <!-- Visión -->
-<section class="bg-blue-800 text-white py-16 px-6" data-aos="fade-up">
-  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+<section class="relative py-16 px-6 z-10" style="" data-aos="fade-up">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center p-10 rounded-3xl shadow-2xl backdrop-blur-md transition-all duration-700 ease-in-out hover:scale-[1.01]" style="background-color: #162C6A;">
     <div>
-      <h2 class="text-4xl font-bold text-yellow-300 mb-4">Visión</h2>
-      <p class="text-lg text-justify leading-relaxed">
+      <h2 class="text-4xl md:text-5xl font-bold text-yellow-300 mb-6 tracking-tight animate-fade-in-up">
+        Visión
+      </h2>
+      <p class="text-lg text-justify text-white/90 leading-relaxed animate-fade-in-up delay-200">
         Ser el referente nacional e internacional en enseñanza del idioma inglés, destacando por nuestra excelencia académica,
         innovación pedagógica y calidad institucional. Aspiramos a transformar vidas mediante una educación de clase mundial.
       </p>
     </div>
-    <div class="flex justify-center">
-      <img src="{% static 'publico/img/vision.jpeg' %}" alt="Visión">
+    <div class="flex justify-center animate-fade-in-up delay-500">
+      <img src="{% static 'publico/img/vision.jpeg' %}" alt="Visión" class="rounded-2xl shadow-xl max-w-full w-[90%] md:w-[80%]">
     </div>
   </div>
 </section>
 
 <!-- Valores -->
-<section class="bg-blue-700 text-white py-16 px-6" data-aos="fade-up">
-  <div class="max-w-6xl mx-auto">
-    <h2 class="text-3xl font-bold text-center text-yellow-400 mb-10">Nuestros Valores</h2>
-    <div class="grid md:grid-cols-2 gap-8 text-lg">
+<section class="relative py-16 px-6 z-10" style="" data-aos="fade-up">
+  <div class="max-w-6xl mx-auto p-10 rounded-3xl shadow-2xl backdrop-blur-md transition-all duration-700 ease-in-out hover:scale-[1.01]" style="background-color: #162C6A;">
+    <h2 class="text-3xl md:text-4xl font-bold text-center text-yellow-400 mb-10 animate-fade-in-up">
+      Nuestros Valores
+    </h2>
+    <div class="grid md:grid-cols-2 gap-8 text-lg text-white/90">
       <ul class="list-disc pl-6 space-y-2 text-justify">
         <li><strong>Excelencia Académica:</strong> Educación de calidad centrada en el estudiante.</li>
         <li><strong>Integridad y Ética:</strong> Formamos ciudadanos honestos y transparentes.</li>
