@@ -52,9 +52,55 @@
                         <li>
                         <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
                         </li>
-                        <li>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
-                        </li>
+                          <li class="relative">
+                            <button id="notificacionesBtn" type="button" aria-haspopup="true" aria-expanded="false"
+                              class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white rounded"
+                              onclick="toggleNotificaciones()">
+                              Notificaciones
+                              {% if notificaciones|length > 0 %}
+                                <span
+                                  class="ml-2 inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                                  {{ notificaciones|length }}
+                                </span>
+                              {% endif %}
+                              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+                              </svg>
+                            </button>
+
+                            <div id="notificacionesDropdown"
+                              class="hidden absolute right-0 mt-2 w-72 bg-white rounded-md shadow-lg z-50 overflow-hidden dark:bg-gray-700">
+                              <ul class="divide-y divide-gray-200 dark:divide-gray-600 max-h-64 overflow-y-auto">
+                                {% if notificaciones %}
+                                  {% for noti in notificaciones %}
+                                    <li class="px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                      <a href="{{ noti.url }}" class="block text-gray-700 dark:text-gray-200">
+                                        {{ noti.mensaje }}
+                                      </a>
+                                    </li>
+                                  {% endfor %}
+                                {% else %}
+                                  <li class="px-4 py-3 text-gray-500 text-sm">No tienes notificaciones.</li>
+                                {% endif %}
+                              </ul>
+                            </div>
+                          </li>
+
+                          <script>
+                            function toggleNotificaciones() {
+                              const dropdown = document.getElementById('notificacionesDropdown');
+                              dropdown.classList.toggle('hidden');
+                            }
+                            document.addEventListener('click', function (event) {
+                              const dropdown = document.getElementById('notificacionesDropdown');
+                              const btn = document.getElementById('notificacionesBtn');
+                              if (!btn.contains(event.target) && !dropdown.contains(event.target)) {
+                                dropdown.classList.add('hidden');
+                              }
+                            });
+                          </script>
+
                         <li>
                         <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Cerrar sesion</a>
                         </li>
@@ -83,6 +129,16 @@
 
 <!-- CONTENIDO -->
 <main class="sm:ml-64 px-6 pt-28 min-h-screen">
+
+  {% if permisos_pendientes > 0 %}
+  <div class="mb-6 p-4 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded">
+    📢 Hay {{ permisos_pendientes }} solicitud(es) de permiso pendiente(s) por revisar.
+      <a href="{% url 'lista_permisos_pendientes' %}" class="underline text-blue-600 hover:text-blue-800">Ver permisos</a>
+  </div>
+  {% endif %}
+
+  <!-- resto del contenido -->
+
 
   <!-- Gestión de Estudiantes -->
   <section id="seccion-estudiantes" class="seccion">
@@ -120,7 +176,6 @@
       </div>
     </div>
   </section>
-
   <!-- Gestión de Personal -->
   <section id="seccion-personal" class="seccion hidden">
     <h3 class="text-2xl font-bold text-blue-800 mb-6">🧑‍💼 Gestión de Personal</h3>
@@ -211,6 +266,17 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     mostrarSeccion('estudiantes', document.querySelector('.link-sidebar'));
+  });
+    function toggleNotificaciones() {
+    const dropdown = document.getElementById('notificacionesDropdown');
+    dropdown.classList.toggle('hidden');
+  }
+  document.addEventListener('click', function (event) {
+    const dropdown = document.getElementById('notificacionesDropdown');
+    const btn = document.getElementById('notificacionesBtn');
+    if (!btn.contains(event.target) && !dropdown.contains(event.target)) {
+      dropdown.classList.add('hidden');
+    }
   });
 </script>
 

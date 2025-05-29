@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'channels',
     # Apps personalizadas
     'apps.usuarios',
     'apps.estudiantes',
@@ -85,6 +86,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apps.usuarios.context_processors.notificaciones_context',
+
             ],
         },
     },
@@ -147,6 +150,21 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+# settings.py (continuación)
+
+# Ya tienes 'channels' en INSTALLED_APPS, perfecto
+
+ASGI_APPLICATION = 'config.asgi.application'  # Cambia 'config' por el nombre de tu proyecto si es distinto
+
+# Configura el channel layer para usar Redis (más adelante instalaremos Redis)
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 
 # Static files (CSS, JavaScript, Images)

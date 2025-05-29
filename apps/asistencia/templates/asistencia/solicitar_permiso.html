@@ -1,21 +1,14 @@
-{% extends "base.html" %}
+{% extends 'publico/base.html' %}
 
 {% block content %}
-<h2>Solicitar Permiso</h2>
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <label>Fecha del permiso:</label>
-    <input type="date" name="fecha_permiso" required><br><br>
+<h2 class="text-2xl font-bold mb-6">Solicitar Permiso</h2>
 
-    <label>Motivo:</label><br>
-    <textarea name="motivo" required></textarea><br><br>
-
-    <label>¿Es urgente?</label>
-    <input type="checkbox" name="urgente"><br><br>
-
-    <label>Archivo de respaldo (opcional):</label>
-    <input type="file" name="archivo"><br><br>
-
-    <button type="submit">Enviar solicitud</button>
+<form method="post" enctype="multipart/form-data" class="space-y-4 max-w-md">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+    Enviar solicitud
+  </button>
 </form>
+
 {% endblock %}
