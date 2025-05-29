@@ -1,41 +1,94 @@
 {% extends 'publico/base.html' %}
-
 {% block title %}Lista de Personal Administrativo{% endblock %}
-
+{% load static %}
+<link rel="stylesheet" href="{% static 'usuarios/css/listar_personal.css' %}">
 {% block content %}
 <section class="p-6 bg-gray-50 min-h-screen">
-  <div class="max-w-6xl mx-auto">
-    <h2 class="text-3xl font-bold text-blue-900 mb-6">👥 Personal Administrativo</h2>
+<div class="max-w-6xl mx-auto">
+  <h2 class="text-5xl font-extrabold text-blue-700 mb-10 tracking-tight animate-fadeInElegant text-center">
+    Personal Administrativo
+  </h2>
 
-    <table class="w-full table-auto bg-white shadow rounded-lg overflow-hidden">
-      <thead class="bg-blue-100 text-blue-900">
-        <tr>
-          <th class="px-4 py-2 text-left">Nombre</th>
-          <th class="px-4 py-2 text-left">CI</th>
-          <th class="px-4 py-2 text-left">Rol</th>
-          <th class="px-4 py-2 text-left">Teléfono</th>
-          <th class="px-4 py-2 text-left">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for p in personal %}
-        <tr class="border-b hover:bg-blue-50 transition">
-          <td class="px-4 py-2">{{ p.nombres }} {{ p.apellidos }}</td>
-          <td class="px-4 py-2">{{ p.ci }}</td>
-          <td class="px-4 py-2 capitalize">{{ p.rol }}</td>
-          <td class="px-4 py-2">{{ p.telefono }}</td>
-          <td class="px-4 py-2">
-            <a href="{% url 'editar_personal' p.id %}" class="text-blue-600 hover:underline mr-2">Editar</a>
-            <a href="{% url 'eliminar_personal' p.id %}" class="text-red-600 hover:underline">Eliminar</a>
-          </td>
-        </tr>
-        {% empty %}
-        <tr>
-          <td colspan="5" class="text-center py-4 text-gray-500">No hay personal registrado.</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+  <!-- Formulario de Filtros -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 bg-white/30 backdrop-blur-xl p-6 rounded-3xl shadow-2xl border border-white/40 animate-fade-in mb-8">
+    <!-- Campo Nombre -->
+    <div class="relative group">
+      <input id="filter-nombre" type="text" placeholder="Filtrar por nombre"
+        class="w-full pl-10 pr-4 py-3 rounded-xl bg-white/80 border border-indigo-300 text-gray-700 placeholder-gray-500
+              focus:ring-4 focus:ring-purple-400 focus:outline-none transition duration-300 shadow-md group-hover:scale-105" />
+      <svg class="w-6 h-6 text-indigo-500 absolute left-3 top-1/2 transform -translate-y-1/2 transition duration-300 group-hover:scale-105"
+        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+        stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+      </svg>
+    </div>
+    <!-- Campo CI -->
+    <div class="relative group">
+      <input id="filter-ci" type="text" placeholder="Filtrar por CI"
+        class="w-full pl-10 pr-4 py-3 rounded-xl bg-white/80 border border-indigo-300 text-gray-700 placeholder-gray-500
+              focus:ring-4 focus:ring-purple-400 focus:outline-none transition duration-300 shadow-md group-hover:scale-105" />
+      <svg class="w-6 h-6 text-indigo-500 absolute left-3 top-1/2 transform -translate-y-1/2 transition duration-300 group-hover:scale-105"
+        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+      </svg>
+    </div>
+    <!-- Campo Rol -->
+    <div class="relative group">
+      <input id="filter-rol" type="text" placeholder="Filtrar por rol"
+        class="w-full pl-10 pr-4 py-3 rounded-xl bg-white/80 border border-indigo-300 text-gray-700 placeholder-gray-500
+              focus:ring-4 focus:ring-purple-400 focus:outline-none transition duration-300 shadow-md group-hover:scale-105" />
+      <svg class="w-6 h-6 text-indigo-500 absolute left-3 top-1/2 transform -translate-y-1/2 transition duration-300 group-hover:scale-105"
+        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347" />
+      </svg>
+    </div>
+    <!-- Campo Teléfono -->
+    <div class="relative group">
+      <input id="filter-telefono" type="text" placeholder="Filtrar por teléfono"
+        class="w-full pl-10 pr-4 py-3 rounded-xl bg-white/80 border border-indigo-300 text-gray-700 placeholder-gray-500
+              focus:ring-4 focus:ring-purple-400 focus:outline-none transition duration-300 shadow-md group-hover:scale-105" />
+      <svg class="w-6 h-6 text-indigo-500 absolute left-3 top-1/2 transform -translate-y-1/2 transition duration-300 group-hover:scale-105"
+        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+      </svg>
+    </div>
   </div>
+  <div class="mt-12 overflow-x-auto rounded-3xl shadow-2xl bg-white/30 backdrop-blur-xl border border-white/40">
+  <table id="personal-table" class="w-full table-auto bg-white shadow rounded-lg overflow-hidden">
+    <thead class="bg-blue-100 text-blue-900">
+      <tr>
+        <th data-column="0" class="px-4 py-2 text-left cursor-pointer">Nombre <span class="sort-indicator"></span></th>
+        <th data-column="1" class="px-4 py-2 text-left cursor-pointer">CI <span class="sort-indicator"></span></th>
+        <th data-column="2" class="px-4 py-2 text-left cursor-pointer">Rol <span class="sort-indicator"></span></th>
+        <th data-column="3" class="px-4 py-2 text-left cursor-pointer">Teléfono <span class="sort-indicator"></span></th>
+        <th class="px-4 py-2 text-left">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in personal %}
+      <tr class="border-b hover:bg-blue-50 transition">
+        <td class="px-4 py-2">{{ p.nombres }} {{ p.apellidos }}</td>
+        <td class="px-4 py-2">{{ p.ci }}</td>
+        <td class="px-4 py-2 capitalize">{{ p.rol }}</td>
+        <td class="px-4 py-2">{{ p.telefono }}</td>
+        <td class="px-4 py-2">
+          <a href="{% url 'editar_personal' p.id %}" class="text-blue-600 hover:underline mr-2">Editar</a>
+          <a href="{% url 'eliminar_personal' p.id %}" class="text-red-600 hover:underline">Eliminar</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5" class="text-center py-4 text-gray-500">No hay personal registrado.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+    </div>
+
 </section>
 {% endblock %}
+<script src="{% static 'usuarios/js/listar_personal.js' %}"></script>

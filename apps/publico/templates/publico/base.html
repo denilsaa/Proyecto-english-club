@@ -12,13 +12,13 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="{% static 'publico/css/main.css' %}">
-  {% block extra_head %}{% endblock %}
+  
 </head>
 <body class="bg-gray-100 font-sans">
   <!-- Contenedor de partículas, con z-index bajo y cubriendo toda la pantalla -->
-    <div id="particles-js" class="fixed inset-0 -z-10"></div>
+  <div id="particles-js" class="fixed inset-0 -z-10"></div>
     {% if not request.session.rol == 'directivo' or request.path|slice:":10" != "/directivo" %}
-      <nav class="bg- text-white shadow-lg relative overflow-hidden z-50 h-16">
+      <nav class="bg-blue-900 text-white shadow-lg relative overflow-hidden z-50 h-16">
         <!-- Imagen perrito moviéndose de izquierda a derecha -->
         <div class="animate-slide-right">
           <img src="{% static 'publico/img/perrito.png' %}" alt="perrito" class="h-16" />
@@ -70,7 +70,7 @@
           </ul>
         </div>
       </nav>
-    {% endif %}
+  {% endif %}
   <!-- Librería particles.js -->
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <!-- JS propio para configurar las partículas -->

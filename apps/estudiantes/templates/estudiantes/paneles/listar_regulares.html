@@ -1,46 +1,137 @@
 {% extends 'publico/base.html' %}
+{% load static %}
 {% block title %}Estudiantes Regulares{% endblock %}
-
 {% block content %}
+<link rel="stylesheet" href="{% static 'regular/css/listar_regular.css' %}">
 <section class="p-6 bg-gray-50 min-h-screen">
   <div class="max-w-7xl mx-auto">
-    <h2 class="text-3xl font-bold text-blue-900 mb-6">👨‍👩‍👧 Estudiantes Regulares</h2>
+    <div class="w-full px-2 max-w-screen-xl mx-auto">
+      <h2 class="text-5xl font-extrabold text-blue-700 mb-10 tracking-tight animate-fadeInElegant text-center">
+        Estudiantes Regulares
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 bg-white/30 backdrop-blur-xl p-6 rounded-3xl shadow-2xl border border-white/40 animate-fade-in">
+        <!-- Estudiante -->
+        <div class="relative group">
+          <input id="filter-estudiante" type="text" placeholder="Filtrar por estudiante"
+            class="w-full pl-10 pr-4 py-3 rounded-xl bg-white/80 border border-indigo-300 text-gray-700 placeholder-gray-500
+                  focus:ring-4 focus:ring-purple-400 focus:outline-none transition duration-300 shadow-md group-hover:scale-105" />
+          <svg class="w-6 h-6 text-indigo-500 absolute left-3 top-1/2 transform -translate-y-1/2"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </div>
 
-    <table class="w-full table-auto bg-white shadow rounded-lg overflow-hidden">
-      <thead class="bg-blue-100 text-blue-900">
+        <!-- CI -->
+        <div class="relative group">
+          <input id="filter-ci" type="text" placeholder="Filtrar por CI"
+            class="w-full pl-10 pr-4 py-3 rounded-xl bg-white/80 border border-indigo-300 text-gray-700 placeholder-gray-500
+                  focus:ring-4 focus:ring-purple-400 focus:outline-none transition duration-300 shadow-md group-hover:scale-105" />
+          <svg class="w-6 h-6 text-indigo-500 absolute left-3 top-1/2 transform -translate-y-1/2"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0A9 9 0 1 1 3 12a9 9 0 0 1 18 0Z" />
+          </svg>
+        </div>
+
+        <!-- Teléfono -->
+        <div class="relative group">
+          <input id="filter-telefono" type="text" placeholder="Filtrar por teléfono"
+            class="w-full pl-10 pr-4 py-3 rounded-xl bg-white/80 border border-indigo-300 text-gray-700 placeholder-gray-500
+                  focus:ring-4 focus:ring-purple-400 focus:outline-none transition duration-300 shadow-md group-hover:scale-105" />
+          <svg class="w-6 h-6 text-indigo-500 absolute left-3 top-1/2 transform -translate-y-1/2"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5h2l.4 2M7 4h10l1 2h3m-4 9a8 8 0 1 1-16 0 8 8 0 0 1 16 0z" />
+          </svg>
+        </div>
+
+        <!-- Grupo -->
+        <div class="relative group">
+          <input id="filter-grupo" type="text" placeholder="Filtrar por grupo"
+            class="w-full pl-10 pr-4 py-3 rounded-xl bg-white/80 border border-indigo-300 text-gray-700 placeholder-gray-500
+                  focus:ring-4 focus:ring-purple-400 focus:outline-none transition duration-300 shadow-md group-hover:scale-105" />
+          <svg class="w-6 h-6 text-indigo-500 absolute left-3 top-1/2 transform -translate-y-1/2"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+          </svg>
+        </div>
+
+        <!-- Padre/Tutor -->
+        <div class="relative group">
+          <input id="filter-padre" type="text" placeholder="Filtrar por padre/tutor"
+            class="w-full pl-10 pr-4 py-3 rounded-xl bg-white/80 border border-indigo-300 text-gray-700 placeholder-gray-500
+                  focus:ring-4 focus:ring-purple-400 focus:outline-none transition duration-300 shadow-md group-hover:scale-105" />
+          <svg class="w-6 h-6 text-indigo-500 absolute left-3 top-1/2 transform -translate-y-1/2"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 14a4 4 0 1 0-8 0m8 0a4 4 0 0 1-8 0m8 0H8" />
+          </svg>
+        </div>
+
+        <!-- CI Padre -->
+        <div class="relative group">
+          <input id="filter-ci-padre" type="text" placeholder="Filtrar CI padre"
+            class="w-full pl-10 pr-4 py-3 rounded-xl bg-white/80 border border-indigo-300 text-gray-700 placeholder-gray-500
+                  focus:ring-4 focus:ring-purple-400 focus:outline-none transition duration-300 shadow-md group-hover:scale-105" />
+          <svg class="w-6 h-6 text-indigo-500 absolute left-3 top-1/2 transform -translate-y-1/2"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M3 14h18" />
+          </svg>
+        </div>
+
+        <!-- Tel. Padre -->
+        <div class="relative group">
+          <input id="filter-tel-padre" type="text" placeholder="Filtrar Tel. padre"
+            class="w-full pl-10 pr-4 py-3 rounded-xl bg-white/80 border border-indigo-300 text-gray-700 placeholder-gray-500
+                  focus:ring-4 focus:ring-purple-400 focus:outline-none transition duration-300 shadow-md group-hover:scale-105" />
+          <svg class="w-6 h-6 text-indigo-500 absolute left-3 top-1/2 transform -translate-y-1/2"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2 8h20M2 16h20" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-12 overflow-x-auto rounded-3xl shadow-2xl bg-white/30 backdrop-blur-xl border border-white/40">
+    <table id="tabla-estudiantes" class="w-full table-auto border-collapse text-gray-800 min-w-[600px]">
+      <thead class="bg-gradient-to-r from-blue-100 to-blue-200 text-blue-900 uppercase tracking-wide text-sm font-semibold select-none cursor-pointer">
         <tr>
-          <th class="px-4 py-2 text-left">Estudiante</th>
-          <th class="px-4 py-2 text-left">CI</th>
-          <th class="px-4 py-2 text-left">Teléfono</th>
-          <th class="px-4 py-2 text-left">Grupo</th>
-          <th class="px-4 py-2 text-left">Padre/Tutor</th>
-          <th class="px-4 py-2 text-left">CI Padre</th>
-          <th class="px-4 py-2 text-left">Tel. Padre</th>
-          <th class="px-4 py-2 text-left">Acciones</th>
+          <th data-column="0" class="px-6 py-3 text-center">Estudiante <span class="sort-indicator"></span></th>
+          <th data-column="1" class="px-6 py-3 text-center">CI <span class="sort-indicator"></span></th>
+          <th data-column="2" class="px-6 py-3 text-center">Teléfono <span class="sort-indicator"></span></th>
+          <th data-column="3" class="px-6 py-3 text-center">Grupo <span class="sort-indicator"></span></th>
+          <th data-column="4" class="px-6 py-3 text-center">Padre/Tutor <span class="sort-indicator"></span></th>
+          <th data-column="5" class="px-6 py-3 text-center">CI Padre <span class="sort-indicator"></span></th>
+          <th data-column="6" class="px-6 py-3 text-center">Tel. Padre <span class="sort-indicator"></span></th>
+          <th class="px-6 py-3 text-left">Acciones</th>
         </tr>
       </thead>
       <tbody>
         {% for e in estudiantes %}
-        <tr class="border-b hover:bg-blue-50 transition">
-          <td class="px-4 py-2">{{ e.nombres }} {{ e.apellidos }}</td>
-          <td class="px-4 py-2">{{ e.ci }}</td>
-          <td class="px-4 py-2">{{ e.telefono }}</td>
-          <td class="px-4 py-2">{{ e.grupo }}</td>
-          <td class="px-4 py-2">{{ e.padre.nombres }} {{ e.padre.apellidos }}</td>
-          <td class="px-4 py-2">{{ e.padre.ci }}</td>
-          <td class="px-4 py-2">{{ e.padre.telefono }}</td>
-          <td class="px-4 py-2">
-            <a href="{% url 'editar_estudiante_regular' e.id %}" class="text-blue-600 hover:underline mr-2">Editar</a>
-            <a href="{% url 'eliminar_estudiante_regular' e.id %}" class="text-red-600 hover:underline">Eliminar</a>
+        <tr class="border-b border-gray-200 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer animate-slideInUp">
+          <td class="px-6 py-4 font-medium">{{ e.nombres }} {{ e.apellidos }}</td>
+          <td class="px-6 py-4">{{ e.ci }}</td>
+          <td class="px-6 py-4">{{ e.telefono }}</td>
+          <td class="px-6 py-4">{{ e.grupo }}</td>
+          <td class="px-6 py-4">{{ e.padre.nombres }} {{ e.padre.apellidos }}</td>
+          <td class="px-6 py-4">{{ e.padre.ci }}</td>
+          <td class="px-6 py-4">{{ e.padre.telefono }}</td>
+          <td class="px-6 py-4 space-x-4">
+            <a href="{% url 'editar_estudiante_regular' e.id %}" class="inline-block px-3 py-1 rounded-md text-sm font-semibold text-blue-700 bg-blue-100 hover:bg-blue-200 hover:text-blue-900 transition transform hover:-translate-y-0.5">
+              Editar
+            </a>
+            <a href="{% url 'eliminar_estudiante_regular' e.id %}" class="inline-block px-3 py-1 rounded-md text-sm font-semibold text-red-700 bg-red-100 hover:bg-red-200 hover:text-red-900 transition transform hover:-translate-y-0.5">
+              Eliminar
+            </a>
           </td>
         </tr>
         {% empty %}
         <tr>
-          <td colspan="8" class="text-center py-4 text-gray-500">No hay estudiantes regulares registrados.</td>
+          <td colspan="8" class="text-center py-6 text-gray-500 italic">No hay estudiantes regulares registrados.</td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
+</div>
 </section>
+<script src="{% static 'regular/js/listar_regular.js' %}"></script>
 {% endblock %}

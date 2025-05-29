@@ -1,34 +1,62 @@
 {% extends 'publico/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}Registrar Administrativo{% endblock %}
+<link rel="stylesheet" href="{% static 'tecnico/css/tecnico.css' %}">
 
 {% block content %}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
+<section class="min-h-screen py-12 px-4 sm:px-6 md:px-12 bg-gradient-to-b from-blue-50 via-gray-100 to-white flex justify-center items-start">
+  <div class="fixed top-0 left-0 w-full h-full opacity-10 bg-[url('/static/img/pattern.svg')] bg-center bg-cover z-0"></div>
 
-<div class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-2xl shadow-lg animate_animated animate_fadeIn">
-  <h2 class="text-2xl font-bold text-blue-700 mb-6 flex items-center gap-2">
-    <i class="fas fa-user-tie"></i> Registrar Administrativo
-  </h2>
+  <form class="relative bg-white border-l-4 border-blue-500 rounded-lg shadow-lg max-w-2xl w-full p-6 animate__animated animate__fadeInUp" method="POST" enctype="multipart/form-data" novalidate>
 
-  <form method="post" enctype="multipart/form-data" novalidate>
-    {% csrf_token %}
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {% for field in form %}
-        <div>
-          <label for="{{ field.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-1">
-            {{ field.label }}
-          </label>
-          {{ field }}
-          {% if field.errors %}
-            <p class="text-red-600 text-sm mt-1">{{ field.errors|striptags }}</p>
-          {% endif %}
-        </div>
-      {% endfor %}
+    <!-- Header -->
+    <div class="relative bg-[#1a3b68] p-6 rounded-t-lg overflow-hidden">
+      <div class="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('/static/img/wave.svg')] bg-cover"></div>
+      <h2 class="relative text-white text-center text-2xl font-bold z-10">
+        <span class="animate__animated animate__pulse animate__infinite animate__slower">
+          <i class="fas fa-user-tie text-yellow-400 mr-2"></i>
+          REGISTRAR ADMINISTRATIVO
+        </span>
+      </h2>
     </div>
-    <div class="mt-6 text-right">
-      <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition-all">
-        <i class="fas fa-save mr-2"></i>Registrar
-      </button>
+
+    <div class="p-6">
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+        <div class="mb-4 text-red-600 font-semibold">
+          {{ form.non_field_errors }}
+        </div>
+      {% endif %}
+
+      <div class="space-y-4">
+        {% for field in form %}
+          <div>
+            <label for="{{ field.id_for_label }}" class="block text-gray-700 font-medium mb-1">
+              {{ field.label }} {% if field.field.required %}<span class="text-red-500">*</span>{% endif %}
+            </label>
+            {{ field|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
+            {% if field.errors %}
+              <p class="text-sm text-red-600 mt-1">{{ field.errors|striptags }}</p>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="mt-6 text-right">
+        <button type="submit"
+          class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-colors duration-200">
+          <i class="fas fa-save mr-2"></i>Registrar
+        </button>
+      </div>
     </div>
   </form>
-</div>
+</section>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.min.js"></script>
+<script src="{% static 'tecnico/js/tecnico.js' %}"></script>
 {% endblock %}

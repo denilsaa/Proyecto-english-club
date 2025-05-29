@@ -199,3 +199,12 @@ document.addEventListener('DOMContentLoaded', function () {
     fechaError.style.opacity = '1';
   });
 });
+
+
+
+
+
+
+
+
+

@@ -1,103 +1,128 @@
 {% extends 'publico/base.html' %}
 
+{% load static %}
+{% load widget_tweaks %}
+
 {% block title %}Registrar Estudiante Regular{% endblock %}
 
 {% block content %}
-<section class="py-10 px-4 bg-gray-50 min-h-screen flex justify-center">
-  <div class="bg-white shadow-md rounded-xl p-8 w-full max-w-2xl">
-    <h2 class="text-2xl font-bold text-blue-800 mb-6">👨‍👧 Registrar Estudiante Regular</h2>
+<section class="min-h-screen py-12 px-4 sm:px-6 md:px-12 bg-gradient-to-b from-blue-50 via-gray-100 to-white flex justify-center items-start">
+  <div class="fixed top-0 left-0 w-full h-full opacity-10 bg-[url('/static/img/pattern.svg')] bg-center bg-cover z-0"></div>
 
-    <form method="post" enctype="multipart/form-data" class="space-y-5">
-      {% csrf_token %}
+  <form method="post" enctype="multipart/form-data"
+        class="relative bg-white border-l-4 border-blue-500 rounded-lg shadow-lg max-w-2xl w-full p-6 animate__animated animate__fadeInUp space-y-6"
+        id="form-registro">
+    <!-- Encabezado -->
+    <div class="relative bg-[#1a3b68] p-6 rounded-t-lg overflow-hidden">
+      <div class="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('/static/img/wave.svg')] bg-cover"></div>
+      <h2 class="relative text-white text-center text-2xl font-bold z-10">
+        <span class="animate__animated animate__pulse animate__infinite animate__slower">
+          <i class="bi bi-person-plus text-yellow-400 mr-2"></i>
+          REGISTRO DE ESTUDIANTE REGULAR
+        </span>
+      </h2>
+    </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label for="id_nombres">Nombres del estudiante:</label>
-          {{ form.nombres }}
-        </div>
-        <div>
-          <label for="id_apellidos">Apellidos del estudiante:</label>
-          {{ form.apellidos }}
-        </div>
+    {% csrf_token %}
 
-        <div>
-          <label for="id_fecha_nacimiento">Fecha nacimiento:</label>
-          {{ form.fecha_nacimiento }}
-        </div>
-        <div>
-          <label for="id_ci">CI:</label>
-          {{ form.ci }}
-        </div>
-
-        <div>
-          <label for="id_direccion">Dirección:</label>
-          {{ form.direccion }}
-        </div>
-        <div>
-          <label for="id_telefono">Teléfono:</label>
-          {{ form.telefono }}
-        </div>
-
-        <div>
-          <label for="id_grupo">Grupo asignado:</label>
-          {{ form.grupo }}
-        </div>
-        <div>
-          <label for="id_colegio_universidad">Colegio/Universidad:</label>
-          {{ form.colegio_universidad }}
-        </div>
-
-        <div class="sm:col-span-2">
-          <label for="id_archivo_documentacion">Archivo documentación:</label>
-          {{ form.archivo_documentacion }}
-        </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <label for="id_nombres" class="block text-gray-700 font-medium mb-1">Nombres del estudiante:</label>
+        {{ form.nombres|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
       </div>
-
-      <hr class="my-6">
-
-      <h3 class="text-lg font-semibold text-blue-700">🧑‍🏫 Datos del Padre o Tutor</h3>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label for="id_padre_nombres">Nombres:</label>
-          {{ form.padre_nombres }}
-        </div>
-        <div>
-          <label for="id_padre_apellidos">Apellidos:</label>
-          {{ form.padre_apellidos }}
-        </div>
-
-        <div>
-          <label for="id_padre_ci">CI:</label>
-          {{ form.padre_ci }}
-        </div>
-        <div>
-          <label for="id_padre_direccion">Dirección:</label>
-          {{ form.padre_direccion }}
-        </div>
-
-        <div>
-          <label for="id_padre_telefono">Teléfono:</label>
-          {{ form.padre_telefono }}
-        </div>
-        <div>
-          <label for="id_padre_fecha_nacimiento">Fecha nacimiento:</label>
-          {{ form.padre_fecha_nacimiento }}
-        </div>
+      <div>
+        <label for="id_apellidos" class="block text-gray-700 font-medium mb-1">Apellidos del estudiante:</label>
+        {{ form.apellidos|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
       </div>
-
-      {% if form.non_field_errors %}
-        <div class="text-red-600 text-sm mt-2">
-          {{ form.non_field_errors }}
-        </div>
-      {% endif %}
-
-      <div class="mt-6 text-center">
-        <button type="submit" class="bg-blue-800 hover:bg-blue-700 text-white px-6 py-2 rounded-lg">
-          Registrar Estudiante
-        </button>
+      <div>
+        <label for="id_fecha_nacimiento" class="block text-gray-700 font-medium mb-1">Fecha nacimiento:</label>
+        {{ form.fecha_nacimiento|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
       </div>
-    </form>
-  </div>
+      <div>
+        <label for="id_ci" class="block text-gray-700 font-medium mb-1">CI:</label>
+        {{ form.ci|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
+      </div>
+      <div>
+        <label for="id_direccion" class="block text-gray-700 font-medium mb-1">Dirección:</label>
+        {{ form.direccion|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
+      </div>
+      <div>
+        <label for="id_telefono" class="block text-gray-700 font-medium mb-1">Teléfono:</label>
+        {{ form.telefono|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
+      </div>
+      <div>
+        <label for="id_grupo" class="block text-gray-700 font-medium mb-1">Grupo asignado:</label>
+        {{ form.grupo|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
+      </div>
+      <div>
+        <label for="id_colegio_universidad" class="block text-gray-700 font-medium mb-1">Colegio/Universidad:</label>
+        <input type="text" id="id_colegio_universidad" name="colegio_universidad"
+               value="{{ form.colegio_universidad.value|default_if_none:'' }}"
+               class="input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" autocomplete="off" />
+        <div id="lista-instituciones" class="lista-sugerencias"></div>
+      </div>
+      <div class="sm:col-span-2">
+        <label for="id_archivo_documentacion" class="block text-gray-700 font-medium mb-1">Archivo documentación:</label>
+        {{ form.archivo_documentacion|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
+        <div id="preview-container" class="mt-2"></div>
+      </div>
+    </div>
+
+    <hr class="my-6 border-blue-200">
+        <div class="relative bg-[#1a3b68] p-6 rounded-t-lg overflow-hidden">
+      <div class="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('/static/img/wave.svg')] bg-cover"></div>
+      <h2 class="relative text-white text-center text-2xl font-bold z-10">
+        <span class="animate__animated animate__pulse animate__infinite animate__slower">
+          <i class="bi bi-person-plus text-yellow-400 mr-2"></i>
+          DATOS DEL PADRE O TUTOR
+        </span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <label for="id_padre_nombres" class="block text-gray-700 font-medium mb-1">Nombres:</label>
+        {{ form.padre_nombres|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
+      </div>
+      <div>
+        <label for="id_padre_apellidos" class="block text-gray-700 font-medium mb-1">Apellidos:</label>
+        {{ form.padre_apellidos|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
+      </div>
+      <div>
+        <label for="id_padre_ci" class="block text-gray-700 font-medium mb-1">CI:</label>
+        {{ form.padre_ci|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
+      </div>
+      <div>
+        <label for="id_padre_direccion" class="block text-gray-700 font-medium mb-1">Dirección:</label>
+        {{ form.padre_direccion|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
+      </div>
+      <div>
+        <label for="id_padre_telefono" class="block text-gray-700 font-medium mb-1">Teléfono:</label>
+        {{ form.padre_telefono|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
+      </div>
+      <div>
+        <label for="id_padre_fecha_nacimiento" class="block text-gray-700 font-medium mb-1">Fecha nacimiento:</label>
+        {{ form.padre_fecha_nacimiento|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
+      </div>
+    </div>
+
+    {% if form.non_field_errors %}
+      <div class="text-red-600 text-sm mt-2">
+        {{ form.non_field_errors }}
+      </div>
+    {% endif %}
+
+    <div class="mt-6 text-center">
+      <button type="submit"
+              class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-colors duration-200">
+        Registrar Estudiante
+      </button>
+    </div>
+  </form>
 </section>
+
+<!-- SCRIPTS FUNCIONALES -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="{% static 'tecnico/js/tecnico.js' %}"></script>
+
 {% endblock %}

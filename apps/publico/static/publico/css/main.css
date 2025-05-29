@@ -1,6 +1,3 @@
-.bg-custom {
-  background-color: #162C6A;
-}
 
 /* Animación para el perrito moviéndose de izquierda a derecha */
 @keyframes slide-right {
@@ -36,7 +33,6 @@
   display: flex;
 }
 
-/* Solo el estilo para el div de partículas (ya controlado con Tailwind, pero por si quieres más control) */
 #particles-js {
   /* Aseguramos que cubra todo el viewport */
   width: 100vw;

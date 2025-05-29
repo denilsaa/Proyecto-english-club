@@ -1,116 +1,199 @@
-{% extends 'publico/base.html' %}
-
-{% block title %}Dashboard Directivo{% endblock %}
-
-{% block content %}
-<section class="px-6 md:px-12 py-12 bg-gray-50 min-h-screen">
-  <div class="mb-10">
-    <h2 class="text-4xl font-extrabold text-blue-900 mb-2">👋 Bienvenido/a, {{ nombre }}</h2>
-    <p class="text-gray-700 text-lg">
-      Este es tu panel de control como directivo del 
-      <span class="font-semibold text-blue-800">Instituto English Club</span>.
-    </p>
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}English Club Institute{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{% static 'publico/css/main.css' %}">
+</head>
+<body class="bg-gray-100 font-sans">
+{% if not request.session.rol == 'directivo' or request.path|slice:":10" != "/directivo" %}
+ 
+<!-- NAV -->
+     {% if not request.session.rol == 'directivo' or request.path|slice:":10" != "/directivo" %}
+ 
+<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+        <div class="px-3 py-3 lg:px-5 lg:pl-3">
+            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-start rtl:justify-end">
+                <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+                    <span class="sr-only">Open sidebar</span>
+                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+                    </svg>
+                </button>
+                <img src="{% static 'publico/img/perrito.png' %}" class="h-8 me-3" alt="Logo English Club" />
+                <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">ENGLISH CLUB</span>
+                </a>
+            </div>
+            <div class="flex items-center">
+                <div class="flex items-center ms-3">
+                    <div>
+                    <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    </svg>
+                    </button>
+                    </div>
+                    <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
+                    <div class="px-4 py-3" role="none">
+                        <p class="text-sm text-gray-900 dark:text-white" role="none">
+                        Neil Sims
+                        </p>
+                        <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
+                        neil.sims@flowbite.com
+                        </p>
+                    </div>
+                    <ul class="py-1" role="none">
+                        <li>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Dashboard</a>
+                        </li>
+                        <li>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
+                        </li>
+                        <li>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
+                        </li>
+                        <li>
+                        <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        </nav>
+            {% endif %}
+ 
+<!-- SIDEBAR -->
+<aside class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 bg-white border-r border-gray-200" aria-label="Sidebar">
+  <div class="h-full px-3 pb-4 overflow-y-auto">
+    <ul class="space-y-2 font-medium">
+      <li><a href="#" onclick="mostrarSeccion('estudiantes', this)" class="link-sidebar active-link">🎓 Gestión de Estudiantes</a></li>
+      <li><a href="#" onclick="mostrarSeccion('personal', this)" class="link-sidebar">🧑‍💼 Gestión de Personal</a></li>
+      <li><a href="#" onclick="mostrarSeccion('cursos', this)" class="link-sidebar">🏫 Gestión de Cursos</a></li>
+    </ul>
   </div>
-
-  <!-- 👥 Gestión de Estudiantes -->
-  <h3 class="text-xl font-bold text-blue-800 mb-4">🎓 Gestión de Estudiantes</h3>
-  <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 mb-12">
-    <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
-      <h4 class="text-lg font-bold text-blue-800 mb-2">🎓 Registrar Estudiante Técnico</h4>
-      <p class="text-sm text-gray-600">Formulario para mayores de edad.</p>
-      <a href="{% url 'registrar_estudiante_tecnico' %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Registrar →</a>
+</aside>
+ 
+<!-- CONTENIDO -->
+<main class="sm:ml-64 px-6 pt-28 min-h-screen">
+ 
+  <!-- Gestión de Estudiantes -->
+  <section id="seccion-estudiantes" class="seccion">
+    <h3 class="text-2xl font-bold text-blue-800 mb-6">🎓 Gestión de Estudiantes</h3>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-12">
+      <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
+        <h4 class="text-lg font-bold text-blue-800 mb-2">🎓 Registrar Estudiante Técnico</h4>
+        <p class="text-sm text-gray-600">Formulario para mayores de edad.</p>
+        <a href="{% url 'registrar_estudiante_tecnico' %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Registrar →</a>
+      </div>
+      <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
+        <h4 class="text-lg font-bold text-blue-800 mb-2">👦 Registrar Estudiante Regular</h4>
+        <p class="text-sm text-gray-600">Formulario para menores y tutor.</p>
+        <a href="{% url 'registrar_estudiante_regular' %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Registrar →</a>
+      </div>
+      <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
+        <h4 class="text-lg font-bold text-blue-800 mb-2">👨‍🎓 Estudiantes Técnicos</h4>
+        <p class="text-sm text-gray-600">Consulta y gestiona los estudiantes técnicos registrados.</p>
+        <a href="{% url 'listar_tecnicos' %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Ver lista →</a>
+      </div>
+      <div class="bg-white border border-red-200 text-red-800 rounded-xl shadow-sm p-6 hover:shadow-md transition">
+        <h4 class="text-lg font-bold mb-2">🗃 Técnicos Inactivos</h4>
+        <p class="text-sm text-gray-600">Ver y reactivar estudiantes técnicos desactivados.</p>
+        <a href="{% url 'listar_tecnicos_inactivos' %}" class="mt-4 block text-sm font-semibold text-red-600 hover:underline">Ver lista →</a>
+      </div>
+      <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
+        <h4 class="text-lg font-bold text-blue-800 mb-2">👧 Estudiantes Regulares</h4>
+        <p class="text-sm text-gray-600">Consulta los estudiantes regulares y sus tutores.</p>
+        <a href="{% url 'listar_regulares' %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Ver lista →</a>
+      </div>
+      <div class="bg-white border border-red-200 text-red-800 rounded-xl shadow-sm p-6 hover:shadow-md transition">
+        <h4 class="text-lg font-bold mb-2">🗃 Regulares Inactivos</h4>
+        <p class="text-sm text-gray-600">Ver y reactivar estudiantes regulares desactivados.</p>
+        <a href="{% url 'listar_regulares_inactivos' %}" class="mt-4 block text-sm font-semibold text-red-600 hover:underline">Ver lista →</a>
+      </div>
     </div>
-
-    <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
-      <h4 class="text-lg font-bold text-blue-800 mb-2">👦 Registrar Estudiante Regular</h4>
-      <p class="text-sm text-gray-600">Formulario para menores y tutor.</p>
-      <a href="{% url 'registrar_estudiante_regular' %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Registrar →</a>
+  </section>
+ 
+  <!-- Gestión de Personal -->
+  <section id="seccion-personal" class="seccion hidden">
+    <h3 class="text-2xl font-bold text-blue-800 mb-6">🧑‍💼 Gestión de Personal</h3>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-12">
+      <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
+        <h4 class="text-lg font-bold text-blue-800 mb-2">🧑‍💼 Registrar Administrativo</h4>
+        <p class="text-sm text-gray-600">Registro de nuevos directivos, docentes o secretarias.</p>
+        <a href="{% url 'registrar_administrativo' %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Registrar →</a>
+      </div>
+      <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
+        <h4 class="text-lg font-bold text-blue-800 mb-2">📋 Ver Personal Administrativo</h4>
+        <p class="text-sm text-gray-600">Consulta todos los directivos, docentes y secretarias registrados.</p>
+        <a href="{% url 'listar_personal' %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Ver lista →</a>
+      </div>
+      <div class="bg-white border border-red-200 text-red-800 rounded-xl shadow-sm p-6 hover:shadow-md transition">
+        <h4 class="text-lg font-bold mb-2">🗃 Personal Inactivo</h4>
+        <p class="text-sm text-gray-600">Ver y reactivar personal desactivado.</p>
+        <a href="{% url 'listar_personal_inactivo' %}" class="mt-4 block text-sm font-semibold text-red-600 hover:underline">Ver lista →</a>
+      </div>
     </div>
-
-    <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
-      <h4 class="text-lg font-bold text-blue-800 mb-2">👨‍🎓 Estudiantes Técnicos</h4>
-      <p class="text-sm text-gray-600">Consulta y gestiona los estudiantes técnicos registrados.</p>
-      <a href="{% url 'listar_tecnicos' %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Ver lista →</a>
+  </section>
+ 
+  <!-- Gestión de Cursos -->
+  <section id="seccion-cursos" class="seccion hidden">
+    <h3 class="text-2xl font-bold text-blue-800 mb-6">🏫 Gestión de Cursos</h3>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-12">
+      <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
+        <h4 class="text-lg font-bold text-blue-800 mb-2">🏫 Gestión de Cursos</h4>
+        <p class="text-sm text-gray-600">Crear, editar y asignar docentes a cursos.</p>
+        <a href="{% url 'listar_cursos' %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Ver cursos →</a>
+      </div>
+      <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
+        <h4 class="text-lg font-bold text-blue-800 mb-2">📄 Ver Estudiantes por Curso</h4>
+        <p class="text-sm text-gray-600">Consulta los estudiantes inscritos en cada curso.</p>
+        <a href="{% url 'listar_cursos' %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Ver estudiantes →</a>
+      </div>
     </div>
-
-    <div class="bg-white border border-red-200 text-red-800 rounded-xl shadow-sm p-6 hover:shadow-md transition">
-      <h4 class="text-lg font-bold mb-2">🗃 Técnicos Inactivos</h4>
-      <p class="text-sm text-gray-600">Ver y reactivar estudiantes técnicos desactivados.</p>
-      <a href="{% url 'listar_tecnicos_inactivos' %}" class="mt-4 block text-sm font-semibold text-red-600 hover:underline">Ver lista →</a>
-    </div>
-
-    <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
-      <h4 class="text-lg font-bold text-blue-800 mb-2">👧 Estudiantes Regulares</h4>
-      <p class="text-sm text-gray-600">Consulta los estudiantes regulares y sus tutores.</p>
-      <a href="{% url 'listar_regulares' %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Ver lista →</a>
-    </div>
-
-    <div class="bg-white border border-red-200 text-red-800 rounded-xl shadow-sm p-6 hover:shadow-md transition">
-      <h4 class="text-lg font-bold mb-2">🗃 Regulares Inactivos</h4>
-      <p class="text-sm text-gray-600">Ver y reactivar estudiantes regulares desactivados.</p>
-      <a href="{% url 'listar_regulares_inactivos' %}" class="mt-4 block text-sm font-semibold text-red-600 hover:underline">Ver lista →</a>
-    </div>
-  </div>
-
-  <!-- 🧑‍💼 Gestión de Personal -->
-  <h3 class="text-xl font-bold text-blue-800 mb-4">🧑‍💼 Gestión de Personal</h3>
-  <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 mb-12">
-    <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
-      <h4 class="text-lg font-bold text-blue-800 mb-2">🧑‍💼 Registrar Administrativo</h4>
-      <p class="text-sm text-gray-600">Registro de nuevos directivos, docentes o secretarias.</p>
-      <a href="{% url 'registrar_administrativo' %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Registrar →</a>
-    </div>
-
-    <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
-      <h4 class="text-lg font-bold text-blue-800 mb-2">📋 Ver Personal Administrativo</h4>
-      <p class="text-sm text-gray-600">Consulta todos los directivos, docentes y secretarias registrados.</p>
-      <a href="{% url 'listar_personal' %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Ver lista →</a>
-    </div>
-
-    <div class="bg-white border border-red-200 text-red-800 rounded-xl shadow-sm p-6 hover:shadow-md transition">
-      <h4 class="text-lg font-bold mb-2">🗃 Personal Inactivo</h4>
-      <p class="text-sm text-gray-600">Ver y reactivar personal desactivado.</p>
-      <a href="{% url 'listar_personal_inactivo' %}" class="mt-4 block text-sm font-semibold text-red-600 hover:underline">Ver lista →</a>
-    </div>
-  </div>
-
-  <!-- 🏫 Gestión de Cursos -->
-  <h3 class="text-xl font-bold text-blue-800 mb-4">🏫 Gestión de Cursos</h3>
-  <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 mb-12">
-    <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
-      <h4 class="text-lg font-bold text-blue-800 mb-2">🏫 Gestión de Cursos</h4>
-      <p class="text-sm text-gray-600">Crear, editar y asignar docentes a cursos.</p>
-      <a href="{% url 'listar_cursos' %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Ver cursos →</a>
-    </div>
-
-    <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
-      <h4 class="text-lg font-bold text-blue-800 mb-2">📄 Ver Estudiantes por Curso</h4>
-      <p class="text-sm text-gray-600">Consulta los estudiantes inscritos en cada curso.</p>
-      <a href="{% url 'listar_cursos' %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Ver estudiantes →</a>
-    </div>
-  </div>
-
-  <!-- 📝 Gestión de Inscripciones -->
-  <h3 class="text-xl font-bold text-blue-800 mb-4">📝 Gestión de Inscripciones</h3>
-  <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-    <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
-      <h4 class="text-lg font-bold text-blue-800 mb-2">📝 Registrar Inscripción</h4>
-      <p class="text-sm text-gray-600">Asignar un estudiante a un curso según modalidad.</p>
-      <a href="{% url 'registrar_inscripcion' %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Registrar →</a>
-    </div>
-
-    <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
-      <h4 class="text-lg font-bold text-blue-800 mb-2">📋 Ver Inscripciones</h4>
-      <p class="text-sm text-gray-600">Listado de todas las inscripciones registradas en el sistema.</p>
-      <a href="{% url 'listar_inscripciones' %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Ver lista →</a>
-    </div>
-  </div>
-
-  <!-- 🔓 Cerrar sesión -->
-  <div class="mt-12 text-center">
-    <a href="{% url 'logout' %}" class="text-red-600 font-medium text-sm hover:underline">
-      🔓 Cerrar sesión
-    </a>
-  </div>
-</section>
-{% endblock %}
+  </section>
+ 
+</main>
+{% endif %}
+ 
+<!-- JS + LOGIC -->
+<script>
+  function mostrarSeccion(id, link) {
+    document.querySelectorAll('.seccion').forEach(s => s.classList.add('hidden'));
+    document.getElementById('seccion-' + id)?.classList.remove('hidden');
+    document.querySelectorAll('.link-sidebar').forEach(l => l.classList.remove('active-link'));
+    link?.classList.add('active-link');
+  }
+ 
+  document.addEventListener('DOMContentLoaded', () => {
+    mostrarSeccion('estudiantes', document.querySelector('.link-sidebar'));
+  });
+</script>
+ 
+<!-- ESTILOS -->
+<style>
+  .link-sidebar {
+    display: block;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    color: #1f2937;
+    transition: background 0.2s;
+  }
+  .link-sidebar:hover {
+    background-color: #f3f4f6;
+  }
+  .active-link {
+    background-color: #e0f2fe;
+    font-weight: bold;
+    color: #2563eb;
+  }
+</style>
+    <script src="https://unpkg.com/flowbite@latest/dist/flowbite.min.js"></script>
+    <script src="{% static 'publico/js/navbar.js' %}"></script>
+ 
+</body>
+</html>

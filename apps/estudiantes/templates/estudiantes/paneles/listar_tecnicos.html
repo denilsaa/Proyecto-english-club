@@ -1,40 +1,99 @@
 {% extends 'publico/base.html' %}
+{% load static %}
 {% block title %}Estudiantes Técnicos{% endblock %}
-
 {% block content %}
-<section class="p-6 bg-gray-50 min-h-screen">
-  <div class="max-w-6xl mx-auto">
-    <h2 class="text-3xl font-bold text-blue-900 mb-6">👨‍💻 Estudiantes Técnicos</h2>
-
-    <table class="w-full table-auto bg-white shadow rounded-lg overflow-hidden">
-      <thead class="bg-blue-100 text-blue-900">
-        <tr>
-          <th class="px-4 py-2 text-left">Nombre</th>
-          <th class="px-4 py-2 text-left">CI</th>
-          <th class="px-4 py-2 text-left">Teléfono</th>
-          <th class="px-4 py-2 text-left">Ocupación</th>
-          <th class="px-4 py-2 text-left">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for e in estudiantes %}
-        <tr class="border-b hover:bg-blue-50 transition">
-          <td class="px-4 py-2">{{ e.nombres }} {{ e.apellidos }}</td>
-          <td class="px-4 py-2">{{ e.ci }}</td>
-          <td class="px-4 py-2">{{ e.telefono }}</td>
-          <td class="px-4 py-2">{{ e.ocupacion }}</td>
-          <td class="px-4 py-2">
-            <a href="{% url 'editar_tecnico' e.id %}" class="text-blue-600 hover:underline mr-2">Editar</a>
-            <a href="{% url 'eliminar_tecnico' e.id %}" class="text-red-600 hover:underline">Eliminar</a>
-          </td>
-        </tr>
-        {% empty %}
-        <tr>
-          <td colspan="5" class="text-center py-4 text-gray-500">No hay estudiantes técnicos registrados.</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+<link rel="stylesheet" href="{% static 'tecnico/css/listar_tecnico.css' %}">
+<section class="p-6 min-h-screen bg-gray-50 bg-opacity-80 backdrop-blur-sm">
+  <div class="max-w-7xl mx-auto">
+    <div class="w-full px-2 max-w-screen-xl mx-auto">
+      <h2 class="text-5xl font-extrabold text-blue-700 mb-10 tracking-tight animate-fadeInElegant text-center">
+        Estudiantes Técnicos
+      </h2>
+      <!-- Formulario de Filtros -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 bg-white/30 backdrop-blur-xl p-6 rounded-3xl shadow-2xl border border-white/40 animate-fade-in">
+        <!-- Campo Nombre -->
+        <div class="relative group">
+          <input id="filter-nombre" type="text" placeholder="Filtrar por nombre"
+            class="w-full pl-10 pr-4 py-3 rounded-xl bg-white/80 border border-indigo-300 text-gray-700 placeholder-gray-500
+                  focus:ring-4 focus:ring-purple-400 focus:outline-none transition duration-300 shadow-md group-hover:scale-105" />
+          <svg class="w-6 h-6 text-indigo-500 absolute left-3 top-1/2 transform -translate-y-1/2 transition duration-300 group-hover:scale-105"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+          </svg>
+        </div>
+        <!-- Campo CI -->
+        <div class="relative group">
+          <input id="filter-ci" type="text" placeholder="Filtrar por CI"
+            class="w-full pl-10 pr-4 py-3 rounded-xl bg-white/80 border border-indigo-300 text-gray-700 placeholder-gray-500
+                  focus:ring-4 focus:ring-purple-400 focus:outline-none transition duration-300 shadow-md group-hover:scale-105" />
+          <svg class="w-6 h-6 text-indigo-500 absolute left-3 top-1/2 transform -translate-y-1/2 transition duration-300 group-hover:scale-105"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z" />
+          </svg>
+        </div>
+        <!-- Campo Teléfono -->
+        <div class="relative group">
+          <input id="filter-telefono" type="text" placeholder="Filtrar por teléfono"
+            class="w-full pl-10 pr-4 py-3 rounded-xl bg-white/80 border border-indigo-300 text-gray-700 placeholder-gray-500
+                  focus:ring-4 focus:ring-purple-400 focus:outline-none transition duration-300 shadow-md group-hover:scale-105" />
+          <svg class="w-6 h-6 text-indigo-500 absolute left-3 top-1/2 transform -translate-y-1/2 transition duration-300 group-hover:scale-105"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+          </svg>
+        </div>
+        <!-- Campo Ocupación -->
+        <div class="relative group">
+          <input id="filter-ocupacion" type="text" placeholder="Filtrar por ocupación"
+            class="w-full pl-10 pr-4 py-3 rounded-xl bg-white/80 border border-indigo-300 text-gray-700 placeholder-gray-500
+                  focus:ring-4 focus:ring-purple-400 focus:outline-none transition duration-300 shadow-md group-hover:scale-105" />
+          <svg class="w-6 h-6 text-indigo-500 absolute left-3 top-1/2 transform -translate-y-1/2 transition duration-300 group-hover:scale-105"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="mt-12 overflow-x-auto rounded-3xl shadow-2xl bg-white/30 backdrop-blur-xl border border-white/40">
+      <table id="estudiantes-table" class="w-full table-auto border-collapse text-gray-800 min-w-[600px]">
+        <thead class="bg-gradient-to-r from-blue-100 to-blue-200 text-blue-900 uppercase tracking-wide text-sm font-semibold select-none cursor-pointer">
+          <tr>
+            <th data-column="nombre" class="px-6 py-3 text-center">Nombre <span class="sort-indicator"></span></th>
+            <th data-column="ci" class="px-6 py-3 text-center">CI <span class="sort-indicator"></span></th>
+            <th data-column="telefono" class="px-6 py-3 text-center">Teléfono <span class="sort-indicator"></span></th>
+            <th data-column="ocupacion" class="px-6 py-3 text-center">Ocupación <span class="sort-indicator"></span></th>
+            <th class="px-6 py-3 text-left">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for e in estudiantes %}
+            <tr class="border-b border-gray-200 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer animate-slideInUp">
+              <td class="px-6 py-4 font-medium">{{ e.nombres }} {{ e.apellidos }}</td>
+              <td class="px-6 py-4">{{ e.ci }}</td>
+              <td class="px-6 py-4">{{ e.telefono }}</td>
+              <td class="px-6 py-4">{{ e.ocupacion }}</td>
+              <td class="px-6 py-4 space-x-4">
+                <a href="{% url 'editar_tecnico' e.id %}" class="inline-block px-3 py-1 rounded-md text-sm font-semibold text-blue-700 bg-blue-100 hover:bg-blue-200 hover:text-blue-900 transition transform hover:-translate-y-0.5">
+                  Editar
+                </a>
+                <a href="{% url 'eliminar_tecnico' e.id %}" class="inline-block px-3 py-1 rounded-md text-sm font-semibold text-red-700 bg-red-100 hover:bg-red-200 hover:text-red-900 transition transform hover:-translate-y-0.5">
+                  Eliminar
+                </a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="5" class="text-center py-6 text-gray-500 italic">No hay estudiantes técnicos registrados.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
+<script src="{% static 'tecnico/js/listar_tecnico.js' %}"></script>
 {% endblock %}

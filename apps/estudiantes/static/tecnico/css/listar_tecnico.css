@@ -1,0 +1,104 @@
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+@keyframes slideInUp {
+  from {opacity: 0; transform: translateY(15px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease forwards;
+}
+.animate-slideInUp {
+  animation: slideInUp 0.4s ease forwards;
+}
+/* Indicadores de ordenamiento */
+th .sort-indicator {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 6px;
+  vertical-align: middle;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid transparent;
+  transition: transform 0.3s ease;
+}
+th.sorted-asc .sort-indicator {
+  border-top-color: currentColor;
+}
+th.sorted-desc .sort-indicator {
+  border-bottom-color: currentColor;
+  border-top: none;
+}
+
+/*PARA H2*/
+@keyframes fadeInElegant {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInElegant {
+  animation: fadeInElegant 1s ease-out forwards;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-fade-in {
+        animation: fade-in 1s ease-out forwards;
+    }
+
+    @keyframes fadeInElegant {
+        0% {
+            opacity: 0;
+            transform: translateY(-20px) scale(0.95);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    .animate-fadeInElegant {
+        animation: fadeInElegant 1.2s ease-out forwards;
+    }
+
+    .shining-text {
+        background: linear-gradient(to right, #3b82f6, #1f2f8b, #353c97);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shine 4s linear infinite;
+    }
+
+
+    @keyframes shine {
+        0% { background-position: -200% center; }
+        100% { background-position: 200% center; }
+    }
+
+#estudiantes-table {
+  color: #1e3a8a; /* Azul oscuro */
+}
+
+#estudiantes-table thead th {
+  position: sticky;
+  top: 0;
+  background-color: #ebf8ff; /* fondo más claro para sticky */
+  z-index: 10;
+}

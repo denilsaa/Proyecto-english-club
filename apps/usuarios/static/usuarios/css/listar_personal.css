@@ -1,0 +1,11 @@
+th.sorted-asc::after {
+  content: " ▲";
+  font-size: 0.7em;
+  color: #1d4ed8; /* azul */
+}
+
+th.sorted-desc::after {
+  content: " ▼";
+  font-size: 0.7em;
+  color: #1d4ed8;
+}
