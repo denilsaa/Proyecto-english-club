@@ -1,5 +1,5 @@
 from django import forms
-from django.core.exceptions import ValidationError  # <-- ESTA LÍNEA ES NECESARIA
+from django.core.exceptions import ValidationError  
 from apps.estudiantes.models.estudiante import Estudiante
 import re
 import os

@@ -1,16 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from apps.usuarios.models.usuario import Usuario
 from apps.usuarios.models.padre import Padre
 from apps.estudiantes.models.estudiante import Estudiante
 from apps.estudiantes.forms.regular import EstudianteRegularForm
 from apps.usuarios.utils import verificar_sesion_rol
 import hashlib, secrets, string
-from django.shortcuts import render, get_object_or_404, redirect
-from apps.estudiantes.models.estudiante import Estudiante
-from apps.usuarios.models.padre import Padre
-from django.shortcuts import get_object_or_404, redirect, render
 
-@verificar_sesion_rol('directivo')
+@verificar_sesion_rol(['directivo', 'secretaria'])
 def registrar_estudiante_regular(request):
     if request.method == 'POST':
         form = EstudianteRegularForm(request.POST, request.FILES)
@@ -34,7 +30,7 @@ def registrar_estudiante_regular(request):
                 usuario_padre = Usuario.objects.create(
                     nombre_usuario=nombre_usuario,
                     contrasena=contrasena_hash,
-                    correo=salt  # temporal, ya que se usa como "salt"
+                    correo=salt  # temporal, se usa como salt
                 )
 
                 # Crear registro de padre
@@ -48,7 +44,7 @@ def registrar_estudiante_regular(request):
                     fecha_nacimiento=datos['padre_fecha_nacimiento']
                 )
 
-                # Crear estudiante
+                # Crear estudiante regular
                 Estudiante.objects.create(
                     nombres=datos['nombres'],
                     apellidos=datos['apellidos'],
@@ -61,10 +57,10 @@ def registrar_estudiante_regular(request):
                     colegio_universidad=datos['colegio_universidad'],
                     archivo_documentacion=datos['archivo_documentacion'],
                     padre=padre,
-                    usuario=None  # El estudiante no accede
+                    usuario=None  # El estudiante regular no tiene acceso directo
                 )
 
-                # Guardar credenciales en sesión
+                # Guardar credenciales en sesión para mostrar después
                 request.session['credenciales_generadas'] = {
                     'usuario': nombre_usuario,
                     'contrasena': contrasena_plana
@@ -76,15 +72,19 @@ def registrar_estudiante_regular(request):
 
     return render(request, 'estudiantes/registrar_regular.html', {'form': form})
 
+@verificar_sesion_rol(['directivo', 'secretaria'])
 def credenciales_generadas_estudiante_regular(request):
-    credenciales = request.session.get('credenciales_generadas', {})
+    credenciales = request.session.pop('credenciales_generadas', None)
+    if not credenciales:
+        return redirect('panel_directivo')  # O a un dashboard común si quieres
     return render(request, 'estudiantes/paneles/credenciales_estudiante_regular.html', {'credenciales': credenciales})
 
+@verificar_sesion_rol(['directivo', 'secretaria'])
 def listar_regulares(request):
     estudiantes = Estudiante.objects.filter(tipo='regular', activo=True).select_related('padre').order_by('nombres')
     return render(request, 'estudiantes/paneles/listar_regulares.html', {'estudiantes': estudiantes})
 
-
+@verificar_sesion_rol(['directivo', 'secretaria'])
 def editar_estudiante_regular(request, id):
     estudiante = get_object_or_404(Estudiante, id=id, tipo='regular')
     padre = estudiante.padre
@@ -93,12 +93,10 @@ def editar_estudiante_regular(request, id):
         form = EstudianteRegularForm(request.POST, request.FILES, instance=estudiante)
 
         if form.is_valid():
-            # Guardar el estudiante
             estudiante = form.save(commit=False)
             estudiante.tipo = 'regular'
             estudiante.save()
 
-            # Guardar datos del padre
             padre.nombres = form.cleaned_data['padre_nombres']
             padre.apellidos = form.cleaned_data['padre_apellidos']
             padre.ci = form.cleaned_data['padre_ci']
@@ -109,7 +107,6 @@ def editar_estudiante_regular(request, id):
 
             return redirect('listar_regulares')
     else:
-        # Precargar los datos del padre en los campos personalizados
         initial_data = {
             'padre_nombres': padre.nombres,
             'padre_apellidos': padre.apellidos,
@@ -118,7 +115,6 @@ def editar_estudiante_regular(request, id):
             'padre_telefono': padre.telefono,
             'padre_fecha_nacimiento': padre.fecha_nacimiento,
         }
-
         form = EstudianteRegularForm(instance=estudiante, initial=initial_data)
 
     return render(request, 'estudiantes/paneles/editar_regular.html', {
@@ -126,6 +122,7 @@ def editar_estudiante_regular(request, id):
         'estudiante': estudiante
     })
 
+@verificar_sesion_rol(['directivo', 'secretaria'])
 def eliminar_estudiante_regular(request, id):
     estudiante = get_object_or_404(Estudiante, id=id, tipo='regular', activo=True)
 
@@ -138,15 +135,16 @@ def eliminar_estudiante_regular(request, id):
         'estudiante': estudiante
     })
 
+@verificar_sesion_rol(['directivo', 'secretaria'])
 def listar_regulares_inactivos(request):
     estudiantes = Estudiante.objects.filter(tipo='regular', activo=False).select_related('padre').order_by('nombres')
     return render(request, 'estudiantes/paneles/listar_regulares_inactivos.html', {
         'estudiantes': estudiantes
     })
 
+@verificar_sesion_rol(['directivo', 'secretaria'])
 def reactivar_estudiante_regular(request, id):
     estudiante = get_object_or_404(Estudiante, id=id, tipo='regular', activo=False)
     estudiante.activo = True
     estudiante.save()
     return redirect('listar_regulares_inactivos')
-

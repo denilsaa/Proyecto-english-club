@@ -56,7 +56,7 @@
                         <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
                         </li>
                         <li>
-                        <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
+                        <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Cerrar sesion</a>
                         </li>
                     </ul>
                     </div>
@@ -74,7 +74,9 @@
       <li><a href="#" onclick="mostrarSeccion('estudiantes', this)" class="link-sidebar active-link">🎓 Gestión de Estudiantes</a></li>
       <li><a href="#" onclick="mostrarSeccion('personal', this)" class="link-sidebar">🧑‍💼 Gestión de Personal</a></li>
       <li><a href="#" onclick="mostrarSeccion('cursos', this)" class="link-sidebar">🏫 Gestión de Cursos</a></li>
-      
+      <li><a href="#" onclick="mostrarSeccion('inscripciones', this)" class="link-sidebar">📝 Gestión de Inscripciones</a></li>
+      <li><a href="#" onclick="mostrarSeccion('asistencia', this)" class="link-sidebar">📅 Gestión de Asistencia</a></li>
+ 
     </ul>
   </div>
 </aside>
@@ -157,6 +159,43 @@
       </div>
     </div>
   </section>
+<!-- Gestión de Inscripciones -->
+<section id="seccion-inscripciones" class="seccion hidden">
+  <h3 class="text-xl font-bold text-blue-800 mb-4">📝 Gestión de Inscripciones</h3>
+  <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
+      <h4 class="text-lg font-bold text-blue-800 mb-2">📝 Registrar Inscripción</h4>
+      <p class="text-sm text-gray-600">Asignar un estudiante a un curso según modalidad.</p>
+      <a href="{% url 'registrar_inscripcion' %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Registrar →</a>
+    </div>
+
+    <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
+      <h4 class="text-lg font-bold text-blue-800 mb-2">📋 Ver Inscripciones</h4>
+      <p class="text-sm text-gray-600">Listado de todas las inscripciones registradas en el sistema.</p>
+      <a href="{% url 'listar_inscripciones' %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Ver lista →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Gestión de Asistencia -->
+<section id="seccion-asistencia" class="seccion hidden">
+<h3 class="text-xl font-bold text-blue-800 mb-4 mt-8">📅 Gestión de Asistencia</h3>
+<div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+  {% for curso in cursos %}
+  <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
+    <h4 class="text-lg font-bold text-blue-800 mb-2">📝 Registrar Asistencia</h4>
+    <p class="text-sm text-gray-600">Registrar la asistencia diaria de los estudiantes en el curso {{ curso.nombre }}.</p>
+    <a href="{% url 'registrar_asistencia_curso' curso.id %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Registrar →</a>
+  </div>
+  <div class="bg-white border border-blue-100 rounded-xl shadow-sm p-6 hover:shadow-md transition">
+    <h4 class="text-lg font-bold text-blue-800 mb-2">📋 Ver Asistencias</h4>
+    <p class="text-sm text-gray-600">Consultar asistencias registradas por fecha y curso {{ curso.nombre }}.</p>
+    <a href="{% url 'listar_asistencias_curso' curso.id %}" class="mt-4 block text-sm font-semibold text-blue-600 hover:underline">Ver lista →</a>
+  </div>
+  {% endfor %}
+</div>
+
+</section>
 
 </main>
 {% endif %}

@@ -9,7 +9,6 @@ from apps.estudiantes.views.regular import (
     reactivar_estudiante_regular,
 )
 
-
 urlpatterns = [
     path('panel/directivo/registrar-estudiante-regular/', registrar_estudiante_regular, name='registrar_estudiante_regular'),
     path('panel/directivo/credenciales-estudiante-regular/', credenciales_generadas_estudiante_regular, name='credenciales_generadas_estudiante_regular'),
