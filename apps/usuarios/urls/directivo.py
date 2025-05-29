@@ -9,6 +9,12 @@ from apps.usuarios.views.directivo import (
     listar_personal_inactivo, 
     reactivar_personal, 
 )
+from apps.usuarios.views.dashboard import (
+    dashboard_secretaria,
+    dashboard_docente,
+    dashboard_padre,
+    dashboard_estudiante,
+)
 
 urlpatterns = [
     path('panel/directivo/', panel_directivo, name='panel_directivo'),
@@ -20,4 +26,9 @@ urlpatterns = [
     path('personal/inactivos/', listar_personal_inactivo, name='listar_personal_inactivo'),
     path('personal/reactivar/<int:id>/', reactivar_personal, name='reactivar_personal'),
 
+    # Dashboards para otros roles
+    path('dashboard/secretaria/', dashboard_secretaria, name='dashboard_secretaria'),
+    path('dashboard/docente/', dashboard_docente, name='dashboard_docente'),
+    path('dashboard/padre/', dashboard_padre, name='dashboard_padre'),
+    path('dashboard/estudiante/', dashboard_estudiante, name='dashboard_estudiante'),
 ]

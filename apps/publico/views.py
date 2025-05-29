@@ -7,7 +7,6 @@ from apps.estudiantes.models.estudiante import Estudiante
 from django.contrib.auth import authenticate, login
 import hashlib
 
-
 def inicio(request):
     return render(request, 'publico/inicio.html')
 
@@ -24,7 +23,7 @@ def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        tipo_usuario = request.POST.get('tipo_usuario')  # ← nuevo
+        tipo_usuario = request.POST.get('tipo_usuario')  # Rol seleccionado
 
         try:
             usuario = Usuario.objects.get(nombre_usuario=username)
@@ -39,8 +38,22 @@ def login_view(request):
             if verificar_contrasena(password, usuario.contrasena):
                 request.session['usuario_id'] = usuario.id
                 request.session['username'] = usuario.nombre_usuario
-                request.session['rol'] = tipo_usuario  # ✅ clave para pasar el filtro
-                return redirect('panel_directivo')
+                request.session['rol'] = tipo_usuario  # Guardar rol en sesión
+
+                # Redirigir según rol
+                if tipo_usuario == 'directivo':
+                    return redirect('panel_directivo')
+                elif tipo_usuario == 'secretaria':
+                    return redirect('dashboard_secretaria')
+                elif tipo_usuario == 'docente':
+                    return redirect('dashboard_docente')
+                elif tipo_usuario == 'padre':
+                    return redirect('dashboard_padre')
+                elif tipo_usuario == 'estudiante':
+                    return redirect('dashboard_estudiante')
+                else:
+                    messages.error(request, "Rol de usuario no reconocido.")
+                    return redirect('login')
             else:
                 messages.error(request, "Usuario o contraseña incorrectos")
         except Usuario.DoesNotExist:
@@ -49,7 +62,6 @@ def login_view(request):
         return redirect('login')
 
     return render(request, 'publico/login.html')
-
 
 def logout_view(request):
     request.session.flush()

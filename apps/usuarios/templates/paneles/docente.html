@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>English Club Institute - Docente</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{% static 'publico/css/main.css' %}" />
+</head>
+<body class="bg-gray-100 font-sans">
+
+<!-- NAV -->
+<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+  <!-- Aquí puedes reutilizar el mismo navbar que en secretaria/directivo -->
+  <!-- O crear uno adaptado al docente -->
+  <!-- Por simplicidad, te dejo igual -->
+  <div class="px-3 py-3 lg:px-5 lg:pl-3">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center">
+        <img src="{% static 'publico/img/perrito.png' %}" class="h-8 me-3" alt="Logo English Club" />
+        <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">ENGLISH CLUB</span>
+      </div>
+      <div class="flex items-center ms-3">
+        <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- SIDEBAR -->
+<aside class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 bg-white border-r border-gray-200" aria-label="Sidebar">
+  <div class="h-full px-3 pb-4 overflow-y-auto">
+    <ul class="space-y-2 font-medium">
+      <li><a href="#" onclick="mostrarSeccion('asistencia', this)" class="link-sidebar active-link">📅 Registrar Asistencia</a></li>
+      <li><a href="#" onclick="mostrarSeccion('estudiantes', this)" class="link-sidebar">🎓 Ver Estudiantes por Curso</a></li>
+    </ul>
+  </div>
+</aside>
+
+<!-- CONTENIDO -->
+<main class="sm:ml-64 px-6 pt-28 min-h-screen">
+
+  <section id="seccion-asistencia" class="seccion">
+    <h3 class="text-2xl font-bold text-blue-800 mb-6">📅 Registro de Asistencia</h3>
+    <p>Aquí el docente podrá registrar la asistencia para sus cursos.</p>
+  </section>
+
+  <section id="seccion-estudiantes" class="seccion hidden">
+    <h3 class="text-2xl font-bold text-blue-800 mb-6">🎓 Estudiantes por Curso</h3>
+    <p>Visualizar los estudiantes inscritos en los cursos que dicta.</p>
+  </section>
+
+</main>
+
+<script>
+  function mostrarSeccion(id, link) {
+    document.querySelectorAll('.seccion').forEach(s => s.classList.add('hidden'));
+    document.getElementById('seccion-' + id)?.classList.remove('hidden');
+    document.querySelectorAll('.link-sidebar').forEach(l => l.classList.remove('active-link'));
+    link?.classList.add('active-link');
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    mostrarSeccion('asistencia', document.querySelector('.link-sidebar'));
+  });
+</script>
+
+<style>
+  .link-sidebar {
+    display: block;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    color: #1f2937;
+    transition: background 0.2s;
+  }
+  .link-sidebar:hover {
+    background-color: #f3f4f6;
+  }
+  .active-link {
+    background-color: #e0f2fe;
+    font-weight: bold;
+    color: #2563eb;
+  }
+</style>
+
+<script src="https://unpkg.com/flowbite@latest/dist/flowbite.min.js"></script>
+<script src="{% static 'publico/js/navbar.js' %}"></script>
+
+</body>
+</html>

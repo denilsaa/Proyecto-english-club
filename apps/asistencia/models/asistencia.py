@@ -8,6 +8,7 @@ class Asistencia(models.Model):
         ('presente', 'Presente'),
         ('ausente', 'Ausente'),
         ('justificado', 'Justificado'),
+        ('retraso', 'Retraso'),  
     ]
 
     estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
