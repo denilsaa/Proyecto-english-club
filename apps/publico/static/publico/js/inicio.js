@@ -183,12 +183,10 @@ function updateText() {
     if (pix[i] != 0) {
       var x = (i / 4) % width;
       var y = Math.floor(Math.floor(i / width) / 4);
-
     if ((x && x % 6 == 0) && (y && y % 6 == 0)) textPixels.push({
     x: x,
     y: 200 - y + -165
     });
-
     }
   }
   setParticles();
