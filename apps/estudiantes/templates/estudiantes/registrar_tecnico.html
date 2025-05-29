@@ -8,7 +8,6 @@
   <div class="fixed top-0 left-0 w-full h-full opacity-10 bg-[url('/static/img/pattern.svg')] bg-center bg-cover z-0"></div>
 
   <form class="relative bg-white border-l-4 border-blue-500 rounded-lg shadow-lg max-w-2xl w-full p-6 animate__animated animate__fadeInUp" method="POST" enctype="multipart/form-data" id="form-registro">
-
     <!-- Header -->
     <div class="relative bg-[#1a3b68] p-6 rounded-t-lg overflow-hidden">
       <div class="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('/static/img/wave.svg')] bg-cover"></div>
@@ -30,47 +29,42 @@
       {% endif %}
 
       {% for field in form %}
-        <div class="mb-4">
-          {% if field.name == "telefono" %}
-            <!-- CAMPO TELÉFONO -->
-            <label for="telefono" class="block text-gray-700 font-medium mb-1">
-              {{ field.label }} {% if field.field.required %}<span class="text-red-500">*</span>{% endif %}
-            </label>
-            <div class="block w-full px-4 py-2 border border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-blue-500">
-              <input type="tel" id="telefono" name="telefono"
-                    class="w-full outline-none"
-                    value="{{ form.telefono.value|default_if_none:'' }}">
-            </div>
-            <p id="telefono-error" class="text-sm text-red-600 mt-1 hidden">Número inválido</p>
+  {% if field.name == 'direccion' %}
+    <div class="mb-4">
+      <label class="block text-gray-700 font-medium mb-1">
+        Dirección <span class="text-red-500">*</span>
+      </label>
 
-          {% elif field.name == "colegio_universidad" %}
-            <!-- CAMPO COLEGIO/UNIVERSIDAD -->
-            <label for="id_colegio_universidad" class="block text-gray-700 font-medium mb-1">
-              {{ field.label }} {% if field.field.required %}<span class="text-red-500">*</span>{% endif %}
-            </label>
-            <div style="position: relative; width: 100%;">
-              <input type="text" id="id_colegio_universidad" name="{{ field.name }}" autocomplete="off"
-                    value="{{ field.value|default_if_none:'' }}" class="input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" />
-              <div id="lista-instituciones" class="lista-sugerencias"></div>
-            </div>
+      <!-- Contenedor del autocompletado de Mapbox -->
+      <div id="geocoder" class="mb-2"></div>
 
-          {% else %}
-            <!-- OTROS CAMPOS -->
-            <label for="{{ field.id_for_label }}" class="block text-gray-700 font-medium mb-1">
-              {{ field.label }} {% if field.field.required %}<span class="text-red-500">*</span>{% endif %}
-            </label>
-            {{ field|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
+      <!-- Mapa donde se mostrará la dirección seleccionada -->
+      <div id="map" class="w-full h-64 rounded border border-gray-300 mb-2"></div>
 
-            {% if field.name == "archivo_documentacion" %}
-              <div id="preview-container" class="mt-2"></div>
-            {% endif %}
-          {% endif %}
+      <!-- Campos ocultos para almacenar latitud y longitud -->
+      <input type="hidden" name="lat" id="lat">
+      <input type="hidden" name="lng" id="lng">
 
-          {% if field.errors %}
-            <p class="text-sm text-red-600 mt-1">{{ field.errors|striptags }}</p>
-          {% endif %}
-        </div>
-      {% endfor %}
+      <!-- Error visible -->
+      <p id="errorDireccion" class="text-red-600 text-sm mt-1"></p>
+    </div>
+  {% else %}
+    <div class="mb-4">
+      <label for="{{ field.id_for_label }}" class="block text-gray-700 font-medium mb-1">
+        {{ field.label }} {% if field.field.required %}<span class="text-red-500">*</span>{% endif %}
+      </label>
+      {{ field|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
+
+      {% if field.name == "archivo_documentacion" %}
+        <div id="preview-container" class="mt-2"></div>
+      {% endif %}
+
+      {% if field.errors %}
+        <p class="text-sm text-red-600 mt-1">{{ field.errors|striptags }}</p>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endfor %}
 
       <button type="submit"
         class="mt-4 w-full sm:w-auto bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-colors duration-200">
@@ -82,9 +76,16 @@
 
 <!-- SCRIPTS FUNCIONALES -->
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.min.js"></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css"
+  type="text/css"
+/>
 <script src="{% static 'tecnico/js/tecnico.js' %}"></script>
+
 <!-- Modal de confirmación -->
 <div id="modalConfirmacion" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
   <div class="bg-white rounded-lg shadow-xl p-6 max-w-sm w-full animate-fade-in-down">

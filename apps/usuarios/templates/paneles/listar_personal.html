@@ -1,6 +1,6 @@
 {% extends 'publico/base.html' %}
-{% block title %}Lista de Personal Administrativo{% endblock %}
 {% load static %}
+{% block title %}Lista de Personal Administrativo{% endblock %}
 <link rel="stylesheet" href="{% static 'usuarios/css/listar_personal.css' %}">
 {% block content %}
 <section class="p-6 bg-gray-50 min-h-screen">
@@ -58,37 +58,36 @@
     </div>
   </div>
   <div class="mt-12 overflow-x-auto rounded-3xl shadow-2xl bg-white/30 backdrop-blur-xl border border-white/40">
-  <table id="personal-table" class="w-full table-auto bg-white shadow rounded-lg overflow-hidden">
-    <thead class="bg-blue-100 text-blue-900">
-      <tr>
-        <th data-column="0" class="px-4 py-2 text-left cursor-pointer">Nombre <span class="sort-indicator"></span></th>
-        <th data-column="1" class="px-4 py-2 text-left cursor-pointer">CI <span class="sort-indicator"></span></th>
-        <th data-column="2" class="px-4 py-2 text-left cursor-pointer">Rol <span class="sort-indicator"></span></th>
-        <th data-column="3" class="px-4 py-2 text-left cursor-pointer">Teléfono <span class="sort-indicator"></span></th>
-        <th class="px-4 py-2 text-left">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for p in personal %}
-      <tr class="border-b hover:bg-blue-50 transition">
-        <td class="px-4 py-2">{{ p.nombres }} {{ p.apellidos }}</td>
-        <td class="px-4 py-2">{{ p.ci }}</td>
-        <td class="px-4 py-2 capitalize">{{ p.rol }}</td>
-        <td class="px-4 py-2">{{ p.telefono }}</td>
-        <td class="px-4 py-2">
-          <a href="{% url 'editar_personal' p.id %}" class="text-blue-600 hover:underline mr-2">Editar</a>
-          <a href="{% url 'eliminar_personal' p.id %}" class="text-red-600 hover:underline">Eliminar</a>
-        </td>
-      </tr>
-      {% empty %}
-      <tr>
-        <td colspan="5" class="text-center py-4 text-gray-500">No hay personal registrado.</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-    </div>
-
+    <table id="personal-table" class="w-full table-auto bg-white shadow rounded-lg overflow-hidden">
+      <thead class="bg-blue-100 text-blue-900">
+        <tr>
+          <th data-column="0" class="px-4 py-2 text-left cursor-pointer">Nombre <span class="sort-indicator"></span></th>
+          <th data-column="1" class="px-4 py-2 text-left cursor-pointer">CI <span class="sort-indicator"></span></th>
+          <th data-column="2" class="px-4 py-2 text-left cursor-pointer">Rol <span class="sort-indicator"></span></th>
+          <th data-column="3" class="px-4 py-2 text-left cursor-pointer">Teléfono <span class="sort-indicator"></span></th>
+          <th class="px-4 py-2 text-left">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in personal %}
+        <tr class="border-b hover:bg-blue-50 transition">
+          <td class="px-4 py-2">{{ p.nombres }} {{ p.apellidos }}</td>
+          <td class="px-4 py-2">{{ p.ci }}</td>
+          <td class="px-4 py-2 capitalize">{{ p.rol }}</td>
+          <td class="px-4 py-2">{{ p.telefono }}</td>
+          <td class="px-4 py-2">
+            <a href="{% url 'editar_personal' p.id %}" class="inline-block px-3 py-1 rounded-md text-sm font-semibold text-blue-700 bg-blue-100 hover:bg-blue-200 hover:text-blue-900 transition transform hover:-translate-y-0.5">Editar</a>
+            <a href="{% url 'eliminar_personal' p.id %}" class="inline-block px-3 py-1 rounded-md text-sm font-semibold text-red-700 bg-red-100 hover:bg-red-200 hover:text-red-900 transition transform hover:-translate-y-0.5">Eliminar</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5" class="text-center py-4 text-gray-500">No hay personal registrado.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </section>
-{% endblock %}
 <script src="{% static 'usuarios/js/listar_personal.js' %}"></script>
+{% endblock %}

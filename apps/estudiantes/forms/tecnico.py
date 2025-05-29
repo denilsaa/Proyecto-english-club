@@ -3,8 +3,6 @@ from django.core.exceptions import ValidationError  # <-- ESTA LÍNEA ES NECESAR
 from apps.estudiantes.models.estudiante import Estudiante
 import re
 import os
-
-
 class EstudianteTecnicoForm(forms.ModelForm):
     class Meta:
         model = Estudiante

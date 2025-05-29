@@ -132,79 +132,187 @@ document.addEventListener('DOMContentLoaded', function () {
     } else if (valor.length < 7 || valor.length > 8) {
       mensaje = 'El CI debe tener 7 u 8 dígitos.';
     }
-
     ciError.textContent = mensaje;
   });
 });
 
 document.addEventListener('DOMContentLoaded', function () {
   const fechaInput = document.querySelector('input[name="fecha_nacimiento"]');
-  const fechaError = document.createElement('div');
-  fechaError.className = 'text-red-500 text-sm mt-1 transition-opacity duration-300 opacity-0';
-  fechaInput.parentNode.appendChild(fechaError);
 
+  // Crear div para errores y añadirlo
+  const errorDiv = document.createElement('div');
+  errorDiv.style.color = 'red';
+  errorDiv.style.marginTop = '5px';
+  fechaInput.parentNode.appendChild(errorDiv);
+
+  // Modal y botones del modal ya están en el HTML
   const modal = document.getElementById('modalConfirmacion');
   const modalMensaje = document.getElementById('modalMensaje');
   const btnAceptar = document.getElementById('btnAceptar');
   const btnCancelar = document.getElementById('btnCancelar');
 
-  let fechaPendiente = '';
+  // Estado para saber si menor confirmado
+  let menorConfirmado = false;
 
-  fechaInput.addEventListener('input', function () {
-    const valor = fechaInput.value;
-    const mensaje = validarFecha(valor);
-    fechaError.textContent = mensaje;
-    fechaError.style.opacity = mensaje ? '1' : '0';
-  });
-
-  function validarFecha(valor) {
-    if (!valor) return 'La fecha no puede estar vacía.';
-
-    const fechaIngresada = new Date(valor);
-    const fechaMinima = new Date('1940-01-01');
+  function calcularEdad(fecha) {
     const hoy = new Date();
-
-    let edad = hoy.getFullYear() - fechaIngresada.getFullYear();
-    const m = hoy.getMonth() - fechaIngresada.getMonth();
-    const d = hoy.getDate() - fechaIngresada.getDate();
-    if (m < 0 || (m === 0 && d < 0)) edad--;
-
-    if (fechaIngresada < fechaMinima) {
-      return 'La fecha no puede ser menor al 01/01/1940.';
-    }
-
-    if (edad < 14) {
-      return 'La edad mínima es 14 años.';
-    }
-
-    if (edad >= 14 && edad <= 17) {
-      fechaPendiente = valor;
-      modalMensaje.textContent = `La fecha ingresada corresponde a un menor de edad (${edad} años). ¿Desea continuar con esta fecha: ${valor}?`;
-      modal.classList.remove('hidden');
-    }
-
-    return '';
+    let edad = hoy.getFullYear() - fecha.getFullYear();
+    const mes = hoy.getMonth() - fecha.getMonth();
+    const dia = hoy.getDate() - fecha.getDate();
+    if (mes < 0 || (mes === 0 && dia < 0)) edad--;
+    return edad;
   }
 
+  function validarFecha() {
+    const valor = fechaInput.value.trim();
+
+    if (!valor) {
+      errorDiv.textContent = 'La fecha de nacimiento es obligatoria.';
+      fechaInput.classList.add('border-red-500');
+      menorConfirmado = false;
+      return false;
+    }
+
+    const fechaVal = new Date(valor);
+    if (isNaN(fechaVal.getTime())) {
+      errorDiv.textContent = 'Fecha inválida.';
+      fechaInput.classList.add('border-red-500');
+      menorConfirmado = false;
+      return false;
+    }
+
+    const edad = calcularEdad(fechaVal);
+
+    if (edad < 14) {
+      errorDiv.textContent = 'Debes tener al menos 14 años para registrarte.';
+      fechaInput.classList.add('border-red-500');
+      menorConfirmado = false;
+      return false;
+    }
+
+    if (edad > 85) {
+      errorDiv.textContent = 'La edad máxima permitida es 85 años.';
+      fechaInput.classList.add('border-red-500');
+      menorConfirmado = false;
+      return false;
+    }
+
+    // Si está entre 14 y 17 y no ha confirmado aún
+    if (edad >= 14 && edad <= 17 && !menorConfirmado) {
+      errorDiv.textContent = '';
+      fechaInput.classList.remove('border-red-500');
+
+      // Mostrar modal con mensaje y esperar respuesta
+      modalMensaje.textContent = `La persona es menor de edad (tiene ${edad} años, nacido el ${valor}). ¿Deseas continuar con esta fecha?`;
+      modal.classList.remove('hidden');
+      fechaInput.blur();
+
+      return null; // Validación pendiente de confirmación
+    }
+
+    // Si pasa todas las validaciones
+    errorDiv.textContent = '';
+    fechaInput.classList.remove('border-red-500');
+    menorConfirmado = false;
+    return true;
+  }
+
+  // Evento input para validar en tiempo real
+  fechaInput.addEventListener('input', function () {
+    menorConfirmado = false; // reset al cambiar fecha
+    validarFecha();
+  });
+
+  // Botones del modal
   btnAceptar.addEventListener('click', function () {
+    menorConfirmado = true;
     modal.classList.add('hidden');
-    fechaError.textContent = '';
-    fechaError.style.opacity = '0';
+    errorDiv.textContent = '';
+    fechaInput.classList.remove('border-red-500');
+    fechaInput.focus();
   });
 
   btnCancelar.addEventListener('click', function () {
     modal.classList.add('hidden');
     fechaInput.value = '';
-    fechaError.textContent = 'Ingrese otra fecha.';
-    fechaError.style.opacity = '1';
+    menorConfirmado = false;
+    errorDiv.textContent = 'Por favor ingresa una nueva fecha.';
+    fechaInput.classList.add('border-red-500');
+    fechaInput.focus();
+  });
+
+  // Opcional: evitar submit si validación falla
+  const form = document.getElementById('form-registro');
+  form.addEventListener('submit', function (e) {
+    const valido = validarFecha();
+    if (valido === false || valido === null) {
+      e.preventDefault();
+      if (valido === null) {
+        // si es null, está pendiente confirmación, ya mostramos modal
+      } else {
+        fechaInput.focus();
+      }
+    }
   });
 });
 
+mapboxgl.accessToken = 'pk.eyJ1IjoiYWlseW5lbmNpbmFzIiwiYSI6ImNsdXN6OXltZjAzNHMyam9nNHR2bGk3dmgifQ.a1eP122SNX_g_e2EbskphA';
 
+const map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/streets-v12',
+  center: [-68.1193, -16.4897], // Coordenadas iniciales (ej. La Paz)
+  zoom: 12
+});
 
+const geocoder = new MapboxGeocoder({
+  accessToken: mapboxgl.accessToken,
+  types: 'address',
+  placeholder: 'Ingresa tu dirección',
+  mapboxgl: mapboxgl,
+  marker: false
+});
 
+document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
+let marker = null;
 
+// Crear un div para mostrar errores (puedes ponerlo en el HTML o crearlo aquí)
+const errorDiv = document.createElement('div');
+errorDiv.style.color = 'red';
+errorDiv.style.marginTop = '5px';
+document.getElementById('geocoder').appendChild(errorDiv);
 
+// Declarar el formulario
+const form = document.getElementById('form-registro');
 
+geocoder.on('result', (e) => {
+  const coords = e.result.center;
+  // Guardar coordenadas ocultas para el formulario
+  document.getElementById('lat').value = coords[1];
+  document.getElementById('lng').value = coords[0];
 
+  // Mover marcador al punto seleccionado o crear uno nuevo
+  if (marker) {
+    marker.setLngLat(coords);
+  } else {
+    marker = new mapboxgl.Marker().setLngLat(coords).addTo(map);
+  }
+
+  // Centrar mapa en la ubicación seleccionada
+  map.flyTo({ center: coords, zoom: 15 });
+
+  // Limpiar mensaje de error si existía
+  errorDiv.textContent = '';
+});
+
+// Validación al enviar formulario
+form.addEventListener('submit', (e) => {
+  const lat = document.getElementById('lat').value;
+  const lng = document.getElementById('lng').value;
+
+  if (!lat || !lng) {
+    e.preventDefault();
+    errorDiv.textContent = 'Por favor selecciona una dirección válida de la lista.';
+  }
+});

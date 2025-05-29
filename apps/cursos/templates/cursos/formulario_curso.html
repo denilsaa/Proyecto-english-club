@@ -1,60 +1,92 @@
 {% extends 'publico/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Registrar Curso{% endblock %}
+
+<link rel="stylesheet" href="{% static 'tecnico/css/tecnico.css' %}">
 
 {% block content %}
-<div class="p-6 max-w-xl mx-auto bg-white rounded-xl shadow-md">
-  <h1 class="text-2xl font-semibold mb-4 text-blue-900">{{ titulo }}</h1>
+<section class="min-h-screen py-12 px-4 sm:px-6 md:px-12 bg-gradient-to-b from-blue-50 via-gray-100 to-white flex justify-center items-start">
+  <div class="fixed top-0 left-0 w-full h-full opacity-10 bg-[url('/static/img/pattern.svg')] bg-center bg-cover z-0"></div>
 
-  <form method="POST" class="space-y-6">
-    {% csrf_token %}
-
-    <div>
-      <label class="block text-sm font-medium text-gray-700">Nombre del curso:</label>
-      {{ form.nombre }}
+  <form class="relative bg-white border-l-4 border-blue-500 rounded-lg shadow-lg max-w-2xl w-full p-6 animate__animated animate__fadeInUp" method="POST" enctype="multipart/form-data">
+    
+    <!-- Header -->
+    <div class="relative bg-[#1a3b68] p-6 rounded-t-lg overflow-hidden">
+      <div class="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('/static/img/wave.svg')] bg-cover"></div>
+      <h2 class="relative text-white text-center text-2xl font-bold z-10">
+        <span class="animate__animated animate__pulse animate__infinite animate__slower">
+          <i class="bi bi-journal-bookmark-fill text-yellow-400 mr-2"></i>
+          {{ titulo }}
+        </span>
+      </h2>
     </div>
 
-    <div>
-      <label class="block text-sm font-medium text-gray-700">Docente:</label>
-      {{ form.docente }}
-    </div>
+    <div class="p-6">
+      {% csrf_token %}
 
-    <div>
-      <label class="block text-sm font-medium text-gray-700">Gestión:</label>
-      {{ form.gestion }}
-    </div>
-
-    <div>
-      <label class="block text-sm font-medium text-gray-700">Tipo de estudiante:</label>
-      {{ form.tipo_estudiante }}
-    </div>
-    <div>
-      <label class="block text-sm font-medium text-gray-700 mb-2">Días (selecciona hasta 6):</label>
-      <div class="space-y-2">
-        {% for checkbox in form.dias %}
-          <label class="flex items-center space-x-2 text-gray-700">
-            {{ checkbox.tag }}
-            <span>{{ checkbox.choice_label }}</span>
-          </label>
-        {% endfor %}
-      </div>
-      {% if form.dias.errors %}
-        <p class="text-red-600 text-sm mt-1">{{ form.dias.errors.0 }}</p>
+      {% if form.non_field_errors %}
+        <div class="mb-4 text-red-600 font-semibold">
+          {{ form.non_field_errors }}
+        </div>
       {% endif %}
-    </div>
 
-    <div>
-      <label class="block text-sm font-medium text-gray-700">Hora inicio:</label>
-      {{ form.hora_inicio }}
-    </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 font-medium mb-1">Nombre del curso:</label>
+        {{ form.nombre|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
+      </div>
 
-    <div>
-      <label class="block text-sm font-medium text-gray-700">Hora fin:</label>
-      {{ form.hora_fin }}
-    </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 font-medium mb-1">Docente:</label>
+        {{ form.docente|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
+      </div>
 
-    <div class="flex items-center gap-4 pt-4">
-      <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Guardar</button>
-      <a href="{% url 'listar_cursos' %}" class="text-sm text-gray-600 hover:underline">Cancelar</a>
+      <div class="mb-4">
+        <label class="block text-gray-700 font-medium mb-1">Gestión:</label>
+        {{ form.gestion|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 font-medium mb-1">Tipo de estudiante:</label>
+        {{ form.tipo_estudiante|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 font-medium mb-2">Días (selecciona hasta 6):</label>
+        <div class="space-y-2">
+          {% for checkbox in form.dias %}
+            <label class="flex items-center space-x-2 text-gray-700">
+              {{ checkbox.tag }}
+              <span>{{ checkbox.choice_label }}</span>
+            </label>
+          {% endfor %}
+        </div>
+        {% if form.dias.errors %}
+          <p class="text-red-600 text-sm mt-1">{{ form.dias.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 font-medium mb-1">Hora inicio:</label>
+        {{ form.hora_inicio|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 font-medium mb-1">Hora fin:</label>
+        {{ form.hora_fin|add_class:"input-uniforme w-full px-4 py-2 border border-gray-300 rounded-md" }}
+      </div>
+
+      <div class="flex items-center gap-4 pt-4">
+        <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition-colors duration-200">
+          Guardar
+        </button>
+        <a href="{% url 'listar_cursos' %}" class="text-sm text-gray-600 hover:underline">Cancelar</a>
+      </div>
     </div>
   </form>
-</div>
+</section>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="{% static 'tecnico/js/tecnico.js' %}"></script>
 {% endblock %}
